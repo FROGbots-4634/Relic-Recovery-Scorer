@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:id="@+id/card_view"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    card_view:cardBackgroundColor="@color/autonomous_dark"
+                                    card_view:cardCornerRadius="4dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:id="@+id/category_autonomous_glyphs_header_txtView"
+            android:layout_width="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Glyphs"
+            android:layout_marginTop="5sp"
+            android:textSize="24sp" />
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            layout="@layout/card_autonomous_preloaded_glyph" />
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            layout="@layout/card_autonomous_glyphs_scored" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

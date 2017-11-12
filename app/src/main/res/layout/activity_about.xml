@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:layout_margin="10dp"
+                  xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150dp"
+            android:layout_gravity="center"
+            android:layout_height="150dp"
+            android:src="@drawable/frogbots_logo_reduced_3" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity=""
+            android:text="This app was developed by FTC Team 4634, the FROGbots.\n\nIf you like our app, please consider leaving us a good review on the Play Store. We'd really appreciate it :)" />
+
+        <Button
+            android:id="@+id/visitOurWebsite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Visit our website" />
+
+        <Button
+            android:id="@+id/visitOurYoutubeChannel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check out our YouTube channel" />
+        <Button
+            android:id="@+id/sendUsAnEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Send us an email" />
+
+    </LinearLayout>
+
+</ScrollView>

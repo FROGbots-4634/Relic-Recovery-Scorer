@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="jewelOptions">
+        <item>No jewels moved</item>
+        <item>Opposing alliance\'s jewel removed</item>
+        <item>Your alliance\'s jewel removed</item>
+    </string-array>
+</resources>

@@ -1,0 +1,238 @@
+<LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/summary_dark"
+              android:orientation="vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/period_summary_header_txtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="5sp"
+        android:text="Summary"
+        android:textSize="30sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/summary_relative_layout"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@color/summary"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:id="@+id/summary_items_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/summary_item_notin_to_see"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No scores have been counted"/>
+
+
+            <TextView
+                android:id="@+id/summary_item_jewel_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Jewels"/>
+
+            <TextView
+                android:id="@+id/summary_item_preloadedGlyph_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pre-loaded glyph"/>
+
+            <TextView
+                android:id="@+id/summary_item_autonomousGlyphs_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Glyphs scored (autonomous)"/>
+
+            <TextView
+                android:id="@+id/summary_item_autonomousPark_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Robot parked (autonomous)"/>
+
+            <TextView
+                android:id="@+id/summary_item_teleopGlyphs_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Glyphs scored (teleop)"/>
+
+            <TextView
+                android:id="@+id/summary_item_rowsComplete_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cryptobox rows complete bonus"/>
+
+            <TextView
+                android:id="@+id/summary_item_columnsComplete_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cryptobox columns complete bonus"/>
+
+            <TextView
+                android:id="@+id/summary_item_cipherComplete_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Completed cipher bonus"/>
+
+            <TextView
+                android:id="@+id/summary_item_relicPosition_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Relic position"/>
+
+            <TextView
+                android:id="@+id/summary_item_relicOrientation_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Relic upright bonus"/>
+
+            <TextView
+                android:id="@+id/summary_item_teleopRobotBalanced_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Robot balanced (teleop)"/>
+
+            <TextView
+                android:id="@+id/summary_item_penaltiesMinor_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Minor penalties"/>
+
+            <TextView
+                android:id="@+id/summary_item_penaltiesMajor_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Major penalties"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/summary_item_jewel_value_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_preloadedGlyph_value_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_autonomousGlyphs_value_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_autonomousPark_value_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_teleopGlyphs_value_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_rowsComplete_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_columnsComplete_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_cipherComplete_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_relicPosition_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_relicOrientation_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_teleopRobotBalanced_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_penaltiesMinor_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/summary_item_penaltiesMajor_score_txtView"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,29 @@
+<LinearLayout android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/penalty"
+              android:orientation="vertical"
+              xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/period_penalty_header_txtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="5sp"
+        android:text="Penalty"
+        android:textSize="30sp" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        layout="@layout/card_penalty_minor" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        layout="@layout/card_penalty_major" />
+
+</LinearLayout>

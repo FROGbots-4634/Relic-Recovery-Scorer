@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="glyphOptions">
+        <item>Glyph NOT scored in Cryptobox</item>
+        <item>Glyph scored in Cryptobox</item>
+        <item>Glyph scored in column indicated by Key</item>
+    </string-array>
+</resources>

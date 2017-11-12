@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relicPositionOptions">
+        <item>Not in a recovery zone</item>
+        <item>In recovery zone #1</item>
+        <item>In recovery zone #2</item>
+        <item>In recovery zone #3</item>
+    </string-array>
+</resources>

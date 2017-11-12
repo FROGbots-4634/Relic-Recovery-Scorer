@@ -1,0 +1,34 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:buttonStyleToggle">@style/CustomToggleBtnStyle</item>
+        <item name="android:spinnerItemStyle">@style/spinnerTextBlack</item>
+        <item name="android:spinnerStyle">@style/lightSpinnerStyle</item>
+        <item name="android:buttonStyle">@style/CustomBtnStyle</item>
+        <item name="android:imageButtonStyle">@style/CustomImageBtnStyle</item>
+    </style>
+
+    <style name="CustomToggleBtnStyle" parent="@android:style/Widget.Holo.Button.Toggle">
+        <item name="android:background">@drawable/btn_toggle_dark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomBtnStyle" parent="@android:style/Widget.Holo.Button">
+        <item name="android:background">@drawable/btn_dark</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="CustomImageBtnStyle" parent="@android:style/Widget.Holo.ImageButton">
+        <item name="android:background">@drawable/btn_dark</item>
+    </style>
+
+    <style name="spinnerTextBlack" parent="@android:style/Widget.Holo.TextView.SpinnerItem">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="lightSpinnerStyle" parent="@android:style/Widget.Holo.Light.Spinner">
+        <item name="android:spinnerStyle">@android:style/Widget.Holo.Light.Spinner</item>
+    </style>
+
+</resources>

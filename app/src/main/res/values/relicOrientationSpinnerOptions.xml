@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relicOrientationOptions">
+        <item>Lying down</item>
+        <item>Upright</item>
+    </string-array>
+</resources>

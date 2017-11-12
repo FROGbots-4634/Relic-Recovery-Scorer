@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="scoreHeader">#7b7b86</color>
+    <color name="scoreHeader_transparent">#d455555c</color>
+
+    <color name="autonomous">#47a641</color>
+    <color name="autonomous_dark">#357033</color>
+
+    <color name="teleop">#3d70bc</color>
+    <color name="teleop_dark">#274976</color>
+
+
+    <color name="endgame">#b43436</color>
+    <color name="endgame_dark">#7b2c2d</color>
+
+    <color name="penalty">#da822f</color>
+    <color name="penalty_dark">#bc5e05</color>
+
+    <color name="button_color">#6b6666</color>
+
+    <color name="purple">#754e80</color>
+    <color name="purple_transparent">#e1754e80</color>
+
+    <color name="summary">#615b63</color>
+    <color name="summary_dark">#7d7880</color>
+</resources>
