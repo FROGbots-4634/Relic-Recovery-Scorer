@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Relic-Recovery-Scorer.iml" filepath="$PROJECT_DIR$/Relic-Recovery-Scorer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/relic-recovery-score-github.iml" filepath="$PROJECT_DIR$/relic-recovery-score-github.iml" />
     </modules>
