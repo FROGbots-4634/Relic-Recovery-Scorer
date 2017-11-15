@@ -25,7 +25,7 @@ import java.util.List;
 
 class ExportScores
 {
-    enum ExportType
+    private enum ExportType
     {
         PLAINTEXT,
         CSV,
@@ -39,8 +39,8 @@ class ExportScores
         builder.setTitle("Export to...");
 
         // add a list
-        String[] periods = {"Plaintext", "CSV File (allows multiple saves)", "Google Sheets (Coming soon)"};
-        builder.setItems(periods, new DialogInterface.OnClickListener()
+        String[] exportTypes = {"Plaintext", "CSV File (allows multiple saves)", "Google Sheets (Coming soon)"};
+        builder.setItems(exportTypes, new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialog, int which)
@@ -52,7 +52,7 @@ class ExportScores
                         break;
 
                     case 1: //CSV
-                        beginCSVExport(context,scores);
+                        beginCSVExport(context, scores);
                         break;
 
                     case 2: //Google Sheets
@@ -70,7 +70,7 @@ class ExportScores
      * Check the filename
      */
     @SuppressLint("SdCardPath")
-    static void beginPlaintextExport(final Context context, final Scores scores)
+    private static void beginPlaintextExport(final Context context, final Scores scores)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
@@ -194,7 +194,7 @@ class ExportScores
             case CSV:
                 try
                 {
-                    exportCSV(exportFile,scores);
+                    exportCSV(context, exportFile, scores);
                 }
                 catch (IOException e)
                 {
@@ -208,7 +208,7 @@ class ExportScores
             case CSVnew:
                 try
                 {
-                    saveNewEntry(exportFile,scores);
+                    saveNewEntry(context, exportFile, scores);
                 }
                 catch (IOException e)
                 {
@@ -326,7 +326,7 @@ class ExportScores
         return result;
     }
 
-    private static void exportCSV (File file, Scores scores) throws IOException
+    private static void exportCSV (Context context, File file, Scores scores) throws IOException
     {
         String array[][] = new String[2][16];
 
@@ -346,8 +346,8 @@ class ExportScores
         array[0][13] = ("Major penalties");
         array[0][14] = ("TOTAL SCORE");
 
-        writeScoresToRow(array,scores,1);
-        saveToCSV(file,array);
+        writeScoresToRow(array, scores, 1);
+        saveToCSV(context, file, array);
     }
 
     private static void writeScoresToRow (String[][] array, Scores scores, int rowNumber)
@@ -371,11 +371,29 @@ class ExportScores
         array[rowNumber][14] = Integer.toString(scores.getTotalScore());
     }
 
-    private static void saveToCSV (File file, String[][] array) throws IOException
+    private static void saveToCSV (Context context, File file, String[][] array) throws IOException
     {
         CSVWriter writer = new CSVWriter(new FileWriter(file));
         writer.writeAll(Arrays.asList(array));
         writer.close();
+
+        /*
+         * Show the user an alert letting them know it was exported
+         */
+        AlertDialog.Builder finishedDialog = new AlertDialog.Builder(context);
+        finishedDialog.
+                setTitle("File exported!")
+                .setMessage("The current scores have been exported to:\n\n" + file.getAbsolutePath())
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        //do things
+                    }
+                });
+        AlertDialog alert = finishedDialog.create();
+        alert.show();
     }
 
     @SuppressLint("SdCardPath")
@@ -501,14 +519,14 @@ class ExportScores
         return dataArr;
     }
 
-    private static void saveNewEntry (File file, Scores scores) throws IOException
+    private static void saveNewEntry (Context context, File file, Scores scores) throws IOException
     {
         String[][] readArray = readCSV(file);
         int count = readArray.length;
         String[][] out = new String[count+1][16];
-        arrayCopy(readArray,out);
+        arrayCopy(readArray, out);
         writeScoresToRow(out,scores,count);
-        saveToCSV(file,out);
+        saveToCSV(context, file, out);
     }
 
     private static void arrayCopy(String[][] aSource, String[][] aDestination)
