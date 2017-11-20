@@ -1,6 +1,8 @@
-package net.frogbots.relicrecoveryscorecalculator;
+package net.frogbots.relicrecoveryscorecalculator.backend;
 
-class Scores
+import net.frogbots.relicrecoveryscorecalculator.backend.CalculateScores;
+
+public class Scores
 {
     /*
      * Number of tasks done
@@ -42,47 +44,47 @@ class Scores
      * Autonomous getters & setters
      */
 
-    void setAutonomousJewelLevel(int level)
+    public void setAutonomousJewelLevel(int level)
     {
         autonomousJewelLevel = level;
     }
 
-    int getAutonomousJewelLevel()
+    public int getAutonomousJewelLevel()
     {
         return autonomousJewelLevel;
     }
 
-    void setAutonomousPreloadedGlyphLevel(int level)
+    public void setAutonomousPreloadedGlyphLevel(int level)
     {
         autonomousPreloadedGlyphLevel = level;
     }
 
-    int getAutonomousPreloadedGlyphLevel()
+    public int getAutonomousPreloadedGlyphLevel()
     {
         return autonomousPreloadedGlyphLevel;
     }
 
-    void positiveIncrementAutonomousGlyphsScored()
+    public void positiveIncrementAutonomousGlyphsScored()
     {
         autonomousGlyphsScored += 1;
     }
 
-    void negativeIncrementAutonomousGlyphsScored()
+    public void negativeIncrementAutonomousGlyphsScored()
     {
         autonomousGlyphsScored -= 1;
     }
 
-    int getAutonomousGlyphsScored()
+    public int getAutonomousGlyphsScored()
     {
         return autonomousGlyphsScored;
     }
 
-    void setParkingLevel(int parkingLevel)
+    public void setParkingLevel(int parkingLevel)
     {
         this.autonomousParkingLevel = parkingLevel;
     }
 
-    int getParkingLevel()
+    public int getParkingLevel()
     {
         return autonomousParkingLevel;
     }
@@ -91,56 +93,56 @@ class Scores
      * Teleop getters & setters
      */
 
-    int getTeleOpGlyphsScored()
+    public int getTeleOpGlyphsScored()
     {
         return teleopGlyphsScored;
     }
 
-    void positiveIncrementTeleopGlyphsScored()
+    public void positiveIncrementTeleopGlyphsScored()
     {
         teleopGlyphsScored += 1;
     }
-    void negativeIncrementTeleopGlyphsScored()
+    public void negativeIncrementTeleopGlyphsScored()
     {
         teleopGlyphsScored -= 1;
     }
 
-    void positiveIncrementTeleopCryptoboxRowsComplete()
+    public void positiveIncrementTeleopCryptoboxRowsComplete()
     {
         teleopCryptoboxRowsComplete += 1;
     }
 
-    void negativeIncrementTeleopCryptoboxRowsComplete()
+    public void negativeIncrementTeleopCryptoboxRowsComplete()
     {
         teleopCryptoboxRowsComplete -= 1;
     }
 
-    int getTeleopCryptoboxRowsComplete()
+    public int getTeleopCryptoboxRowsComplete()
     {
         return teleopCryptoboxRowsComplete;
     }
 
-    void positiveIncrementTeleopCryptoboxColumnsComplete()
+    public void positiveIncrementTeleopCryptoboxColumnsComplete()
     {
         teleopCryptoboxColumnsComplete += 1;
     }
 
-    void negativeIncrementTeleopCryptoboxColumnsComplete()
+    public void negativeIncrementTeleopCryptoboxColumnsComplete()
     {
         teleopCryptoboxColumnsComplete -= 1;
     }
 
-    int getTeleopCryptoboxColumnsComplete()
+    public int getTeleopCryptoboxColumnsComplete()
     {
         return teleopCryptoboxColumnsComplete;
     }
 
-    void setTeleopCipherLevel(int i)
+    public void setTeleopCipherLevel(int i)
     {
         teleopCipherLevel = i;
     }
 
-    int getTeleopCipherLevel()
+    public int getTeleopCipherLevel()
     {
         return teleopCipherLevel;
     }
@@ -149,32 +151,32 @@ class Scores
      * Endgame getters & setters
      */
 
-    void setEndgameRelicPosition(int i)
+    public void setEndgameRelicPosition(int i)
     {
         endgameRelicPosition = i;
     }
 
-    int getEndgameRelicPosition()
+    public int getEndgameRelicPosition()
     {
         return endgameRelicPosition;
     }
 
-    void setEndgameRelicOrientation(int i)
+    public void setEndgameRelicOrientation(int i)
     {
         endgameRelicOrientation = i;
     }
 
-    int getEndgameRelicOrientation()
+    public int getEndgameRelicOrientation()
     {
         return endgameRelicOrientation;
     }
 
-    void setEndgameRobotBalanced(int i)
+    public void setEndgameRobotBalanced(int i)
     {
         endgameRobotBalanced = i;
     }
 
-    int getEndgameRobotBalanced()
+    public int getEndgameRobotBalanced()
     {
         return endgameRobotBalanced;
     }
@@ -183,37 +185,37 @@ class Scores
      * Penalty getters & setters
      */
 
-    void positiveIncrementPenaltiesMinor()
+    public void positiveIncrementPenaltiesMinor()
     {
         penaltiesMinor += 1;
     }
 
-    void negativeIncrementPenaltiesMinor()
+    public void negativeIncrementPenaltiesMinor()
     {
         penaltiesMinor -= 1;
     }
 
-    int getNumMinorPenalties()
+    public int getNumMinorPenalties()
     {
         return penaltiesMinor;
     }
 
-    void positiveIncrementPenaltiesMajor()
+    public void positiveIncrementPenaltiesMajor()
     {
         penaltiesMajor += 1;
     }
 
-    void negativeIncrementPenaltiesMajor()
+    public void negativeIncrementPenaltiesMajor()
     {
         penaltiesMajor -= 1;
     }
 
-    int getNumMajorPenalties()
+    public int getNumMajorPenalties()
     {
         return penaltiesMajor;
     }
 
-    int getTotalScore()
+    public int getTotalScore()
     {
         /*
          * Autonomous
@@ -263,7 +265,7 @@ class Scores
                 + penaltiesMajorScore;
     }
 
-    void clearAllScores()
+    public void clearAllScores()
     {
         /*
          * Autonomous

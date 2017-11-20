@@ -1,10 +1,14 @@
-package net.frogbots.relicrecoveryscorecalculator;
+package net.frogbots.relicrecoveryscorecalculator.ui;
 
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import net.frogbots.relicrecoveryscorecalculator.R;
+import net.frogbots.relicrecoveryscorecalculator.backend.CalculateScores;
+import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 
 @SuppressLint("SetTextI18n")
 class Summary
@@ -96,7 +100,7 @@ class Summary
 
     void updateSummary(Scores scores)
     {
-        setVisibilityAndText(summaryJewelScore,                         summaryJewelScoreValue,                         CalculateScores.calculateAutonomousJewelScore(                scores.getAutonomousJewelLevel()            ));
+        setVisibilityAndText(summaryJewelScore, summaryJewelScoreValue, CalculateScores.calculateAutonomousJewelScore(scores.getAutonomousJewelLevel()            ));
         setVisibilityAndText(summaryPreloadedGlyphScore,                summaryPreloadedGlyphScoreValue,                CalculateScores.calculateAutonomousPreLoadedGlyphScore(       scores.getAutonomousPreloadedGlyphLevel()   ));
         setVisibilityAndText(summaryAutoGlyphsScore,                    summaryAutoGlyphsScoreValue,                    CalculateScores.calculateAutonomousGlyphsScore(               scores.getAutonomousGlyphsScored()          ));
         setVisibilityAndText(summaryAutoRobotParkedScore,               summaryAutoRobotParkedScoreValue,               CalculateScores.calculateAutonomousParkingScore(              scores.getParkingLevel()                    ));

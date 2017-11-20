@@ -1,4 +1,4 @@
-package net.frogbots.relicrecoveryscorecalculator;
+package net.frogbots.relicrecoveryscorecalculator.backend;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -23,7 +21,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-class ExportScores
+public class ExportScores
 {
     private enum ExportType
     {
@@ -33,7 +31,7 @@ class ExportScores
         CSVnew
     }
 
-    static void export(final Context context, final Scores scores)
+    public static void export(final Context context, final Scores scores)
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Export to...");

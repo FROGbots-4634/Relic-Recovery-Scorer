@@ -1,4 +1,4 @@
-package net.frogbots.relicrecoveryscorecalculator;
+package net.frogbots.relicrecoveryscorecalculator.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +10,8 @@ import android.os.CountDownTimer;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import net.frogbots.relicrecoveryscorecalculator.R;
 
 @SuppressLint("SetTextI18n")
 class Timer

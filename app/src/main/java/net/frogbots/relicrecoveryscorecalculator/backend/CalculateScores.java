@@ -1,6 +1,6 @@
-package net.frogbots.relicrecoveryscorecalculator;
+package net.frogbots.relicrecoveryscorecalculator.backend;
 
-class CalculateScores
+public class CalculateScores
 {
     /*
      * Autonomous
@@ -40,7 +40,7 @@ class CalculateScores
     private static final int PENALTY_MAJOR                            = -40;
     private static final int PENALTY_MINOR                            = -10;
 
-    static int calculateAutonomousJewelScore(int i)
+    public static int calculateAutonomousJewelScore(int i)
     {
         int result = 0;
 
@@ -62,7 +62,7 @@ class CalculateScores
         return result;
     }
 
-    static int calculateAutonomousPreLoadedGlyphScore(int i)
+    public static int calculateAutonomousPreLoadedGlyphScore(int i)
     {
         int result = 0;
 
@@ -84,12 +84,12 @@ class CalculateScores
         return result;
     }
 
-    static int calculateAutonomousGlyphsScore(int i)
+    public static int calculateAutonomousGlyphsScore(int i)
     {
         return i * AUTONOMOUS_GLYPH_SCORED;
     }
 
-    static int calculateAutonomousParkingScore(int i)
+    public static int calculateAutonomousParkingScore(int i)
     {
         int result = 0;
 
@@ -107,22 +107,22 @@ class CalculateScores
         return result;
     }
 
-    static int calculateTeleopGlyphsScore(int i)
+    public static int calculateTeleopGlyphsScore(int i)
     {
         return i * TELEOP_GLYPH_SCORED;
     }
 
-    static int calculateTeleopCryptoboxRowsCompletedScore(int i)
+    public static int calculateTeleopCryptoboxRowsCompletedScore(int i)
     {
         return i * TELEOP_CRYPTOBOX_ROW_COMPLETE;
     }
 
-    static int calculateTeleopCryptoboxColumnsCompleteScore(int i)
+    public static int calculateTeleopCryptoboxColumnsCompleteScore(int i)
     {
         return i * TELEOP_CRYPTOBOX_COLUMN_COMPLETE;
     }
 
-    static int calculateTeleopCompletedCipherScore(int i)
+    public static int calculateTeleopCompletedCipherScore(int i)
     {
         int result = 0;
 
@@ -140,7 +140,7 @@ class CalculateScores
         return result;
     }
 
-    static int calculateEndgameRelicPositionScore(int i)
+    public static int calculateEndgameRelicPositionScore(int i)
     {
         int result = 0;
 
@@ -166,7 +166,7 @@ class CalculateScores
         return result;
     }
 
-    static int calculateEndgameRelicOrientationScore(int i)
+    public static int calculateEndgameRelicOrientationScore(int i)
     {
         int result = 0;
 
@@ -184,7 +184,7 @@ class CalculateScores
         return result;
     }
 
-    static int calculateEndgameRobotBalancedScore(int i)
+    public static int calculateEndgameRobotBalancedScore(int i)
     {
         int result = 0;
 
@@ -202,12 +202,12 @@ class CalculateScores
         return result;
     }
 
-    static int calculatePenaltyMinorScore(int i)
+    public static int calculatePenaltyMinorScore(int i)
     {
         return i * PENALTY_MINOR;
     }
 
-    static int calculatePenaltyMajorScore(int i)
+    public static int calculatePenaltyMajorScore(int i)
     {
         return i * PENALTY_MAJOR;
     }

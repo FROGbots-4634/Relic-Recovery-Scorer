@@ -1,4 +1,4 @@
-package net.frogbots.relicrecoveryscorecalculator;
+package net.frogbots.relicrecoveryscorecalculator.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,18 +8,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import net.frogbots.relicrecoveryscorecalculator.R;
+import net.frogbots.relicrecoveryscorecalculator.backend.ExportScores;
+import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
+import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
 
 @SuppressLint("SetTextI18n")
 public class MainActivity extends Activity
@@ -808,6 +810,11 @@ public class MainActivity extends Activity
         else if (id == R.id.exitMenuItem)
         {
             finish();
+        }
+
+        else if (id == R.id.queryHighscoreMenuItem)
+        {
+            TOA_queryHighscore.query(this);
         }
 
         return super.onOptionsItemSelected(item);

@@ -17,6 +17,11 @@
         android:title="Export Scores" />
 
     <item
+        android:id="@+id/queryHighscoreMenuItem"
+        android:showAsAction="never"
+        android:title="Query Highscore" />
+
+    <item
         android:id="@+id/exitMenuItem"
         android:showAsAction="never"
         android:title="Exit" />
