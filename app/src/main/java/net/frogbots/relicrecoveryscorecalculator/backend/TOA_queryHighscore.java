@@ -17,10 +17,14 @@ public class TOA_queryHighscore
     private static final String apiApplicationName = "FTC Relic Recovery Scorer";
     private static final String apiKey = "";
     private static ProgressDialog toaProgressDialog;
-    private static final String TOA_HIGHSCORE_ELIM_WITHOUT_PENALTY = "https://theorangealliance.org/apiv2/matches/1718/high-scores/elim-no-penalty";
-    private static final String RED_SCORE_STRING = "red_score";
-    private static final String BLUE_SCORE_STRING = "blue_score";
-    private static final String MATCH_KEY_STRING = "match_key";
+    private static final String TOA_HIGHSCORE_ELIM_WITHOUT_PENALTY_URL = "https://theorangealliance.org/apiv2/matches/1718/high-scores/elim-no-penalty";
+    private static final String TOA_HIGHSCORE_QUAL_WITHOUT_PENALTY_URL = "https://theorangealliance.org/apiv2/matches/1718/high-scores/qual-no-penalty";
+    private static final String TOA_HIGHSCORE_WITH_PENALTY_URL = "https://theorangealliance.org/apiv2/matches/1718/high-scores/with-penalty";
+    private static final String RED_SCORE_KEY = "red_score";
+    private static final String BLUE_SCORE_KEY = "blue_score";
+    private static final String BLUE_PENALTY_KEY = "blue_penalty";
+    private static final String RED_PENALTY_KEY = "red_penalty";
+    private static final String MATCH_STRING_KEY = "match_key";
 
     public static int query(final Activity activity)
     {
@@ -41,13 +45,13 @@ public class TOA_queryHighscore
                     {
                         //Thread.sleep(1000);
 
-                        showResult(activity, getHighscore(getJsonFromToa(TOA_HIGHSCORE_ELIM_WITHOUT_PENALTY)));
+                        showResult(activity, formatHighscoreMessage(getHighscore()));
 
                         dismissProgressDialog(activity);
                     }
                     else
                     {
-                        showNoInternetDialog(activity);
+                        Utils.showNoInternetDialog(activity);
                         dismissProgressDialog(activity);
                     }
                 }
@@ -71,33 +75,6 @@ public class TOA_queryHighscore
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
                 builder1.setTitle("Highscore");
                 builder1.setMessage(msg);
-                builder1.setCancelable(false);
-                builder1.setNegativeButton(
-                        "Ok",
-                        new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int id)
-                            {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
-            }
-        });
-    }
-
-    private static void showNoInternetDialog(final Activity activity)
-    {
-        activity.runOnUiThread(new Runnable()
-        {
-            @Override
-            public void run ()
-            {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                builder1.setTitle("Ruh-roh!");
-                builder1.setMessage("You don't appear to be connected to the internet :(");
                 builder1.setCancelable(false);
                 builder1.setNegativeButton(
                         "Ok",
@@ -141,8 +118,46 @@ public class TOA_queryHighscore
         });
     }
 
-    private static Highscore getHighscore (String data) throws JSONException
+    private static String formatHighscoreMessage(Highscore highscore)
     {
+        return "According to TOA data, the current high score is "+ highscore.score
+                + " and was set by the " + highscore.alliance
+                + " alliance in match " + highscore.matchKey;
+    }
+
+    private static Highscore getHighscore () throws JSONException, IOException
+    {
+        Highscore noPenaltyElims = downloadAndParseHighscore(TOA_HIGHSCORE_ELIM_WITHOUT_PENALTY_URL);
+        Highscore noPenaltyQuals = downloadAndParseHighscore(TOA_HIGHSCORE_QUAL_WITHOUT_PENALTY_URL);
+        Highscore highWithPenaltyAfterSubtraction = downloadAndParseHighscore(TOA_HIGHSCORE_WITH_PENALTY_URL);
+
+        if(noPenaltyElims.score > noPenaltyQuals.score)
+        {
+            if(highWithPenaltyAfterSubtraction.score > noPenaltyElims.score)
+            {
+                return highWithPenaltyAfterSubtraction;
+            }
+            else // noPenaltyElims.score > highWithPenaltyAfterSubtraction.score
+            {
+                return noPenaltyElims;
+            }
+        }
+        else // noPenaltyQuals.score > noPenaltyElims.score
+        {
+            if(highWithPenaltyAfterSubtraction.score > noPenaltyQuals.score)
+            {
+                return highWithPenaltyAfterSubtraction;
+            }
+            else // noPenaltyQuals.score > highWithPenaltyAfterSubtraction.score
+            {
+                return noPenaltyQuals;
+            }
+        }
+    }
+
+    private static Highscore downloadAndParseHighscore(String url) throws JSONException, IOException
+    {
+        String data = getJsonFromToa(url);
         JSONArray jsonArray = new JSONArray(data);
         JSONObject jsonObject = jsonArray.getJSONObject(0);
 
@@ -150,36 +165,49 @@ public class TOA_queryHighscore
         int redScore;
         String matchKey;
 
-        blueScore = Integer.parseInt(jsonObject.getString(BLUE_SCORE_STRING));
-        redScore = Integer.parseInt(jsonObject.getString(RED_SCORE_STRING));
-        matchKey = jsonObject.getString(MATCH_KEY_STRING);
+        blueScore = Integer.parseInt(jsonObject.getString(BLUE_SCORE_KEY));
+        redScore = Integer.parseInt(jsonObject.getString(RED_SCORE_KEY));
+        matchKey = jsonObject.getString(MATCH_STRING_KEY);
 
         System.out.println("Red: " + blueScore);
         System.out.println("Blue: " + redScore);
 
-        if(blueScore > redScore)
+        if(url.equals(TOA_HIGHSCORE_WITH_PENALTY_URL))
         {
-            return "According to TOA data, the current high score is " + blueScore + " and was set by the blue alliance in match " + matchKey;
+            int bluePenalty;
+            int blueScoreMinusPenalty;
+            int redPenalty;
+            int redScoreMinusPenalty;
+
+            blueScore = Integer.parseInt(jsonObject.getString(BLUE_SCORE_KEY));
+            redScore = Integer.parseInt(jsonObject.getString(RED_SCORE_KEY));
+            matchKey = jsonObject.getString(MATCH_STRING_KEY);
+
+            bluePenalty = Integer.parseInt(jsonObject.getString(BLUE_PENALTY_KEY));
+            redPenalty = Integer.parseInt(jsonObject.getString(RED_PENALTY_KEY));
+
+            redScoreMinusPenalty = redScore - redPenalty;
+            blueScoreMinusPenalty = blueScore - bluePenalty;
+
+            if(redScoreMinusPenalty > blueScoreMinusPenalty)
+            {
+                return new Highscore(matchKey, "red", redScoreMinusPenalty);
+            }
+            else
+            {
+                return new Highscore(matchKey, "blue", blueScoreMinusPenalty);
+            }
         }
         else
         {
-            return "According to TOA data, the current high score is " + redScore + " and was set by the red alliance in match " + matchKey;
+            if(blueScore > redScore)
+            {
+                return new Highscore(matchKey, "blue", blueScore);
+            }
+            else
+            {
+                return new Highscore(matchKey, "red", redScore);
+            }
         }
-    }
-
-    private static Highscore getHighScoreAfterSubtractPenalty(String data) throws JSONException
-    {
-        JSONArray jsonArray = new JSONArray(data);
-        JSONObject match1 = jsonArray.getJSONObject(0);
-        JSONObject match2 = jsonArray.getJSONObject(0);
-
-        int blueScore1 = Integer.parseInt(match1.getString(BLUE_SCORE_STRING));
-        int redScore1 = Integer.parseInt(match1.getString(RED_SCORE_STRING));
-        String matchKey1 = match1.getString(MATCH_KEY_STRING);
-        int blueScore2 = Integer.parseInt(match2.getString(BLUE_SCORE_STRING));
-        int redScore2 = Integer.parseInt(match2.getString(RED_SCORE_STRING));
-        String matchKey2 = match1.getString(MATCH_KEY_STRING);
-
-
     }
 }
