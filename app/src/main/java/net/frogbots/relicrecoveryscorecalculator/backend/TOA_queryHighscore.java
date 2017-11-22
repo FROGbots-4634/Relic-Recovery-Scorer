@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.text.Html;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -58,6 +61,14 @@ public class TOA_queryHighscore
                 catch (/*InterruptedException | */IOException | JSONException e)
                 {
                     e.printStackTrace();
+
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    String sStackTrace = sw.toString(); // stack trace as a string
+
+                    dismissProgressDialog(activity);
+                    showSomethingWentWrongDialog(activity, sStackTrace);
                 }
             }
         }).start();
@@ -209,5 +220,34 @@ public class TOA_queryHighscore
                 return new Highscore(matchKey, "red", redScore);
             }
         }
+    }
+
+    private static void showSomethingWentWrongDialog(final Activity activity, final String err)
+    {
+        final String msg = "<b><font color='red'>Something went wrong :(</font></b><br><br>" + err;
+
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run ()
+            {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+                builder1.setTitle("Ruh-roh!");
+                builder1.setMessage(Html.fromHtml(msg));
+                builder1.setCancelable(false);
+                builder1.setNegativeButton(
+                        "Ok",
+                        new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+        });
     }
 }
