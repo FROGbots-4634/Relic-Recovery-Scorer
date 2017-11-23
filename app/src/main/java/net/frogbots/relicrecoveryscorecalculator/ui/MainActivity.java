@@ -1,13 +1,16 @@
 package net.frogbots.relicrecoveryscorecalculator.ui;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +21,13 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.ExportScores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
+import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 
 @SuppressLint("SetTextI18n")
 public class MainActivity extends Activity
@@ -804,7 +810,7 @@ public class MainActivity extends Activity
 
         else if (id == R.id.exportMenuItem)
         {
-            ExportScores.export(this, scores);
+            ExportScores.exportWithPermissionsWrapper(this, scores);
         }
 
         else if (id == R.id.exitMenuItem)
@@ -818,6 +824,40 @@ public class MainActivity extends Activity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        switch (requestCode)
+        {
+            case ExportScores.REQUEST_EXTERNAL_STORAGE_PERMISSIONS:
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                {
+                    //denied
+                    Utils.showSimpleOkDialog(MainActivity.this, "In order for the exported file to be written to disk, you need to grant the extenal storage permission");
+                }
+                else
+                {
+                    if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        //allowed
+                        ExportScores.exportWithPermissionsWrapper(this, scores);
+                    }
+
+                    else
+                    {
+                        //set to never ask again
+                        //do something here.
+                        Utils.showSimpleOkDialog(MainActivity.this, "You have permanently denied the external storage permission. In order to use the Export Scores feature, you need to go to your system settings and grant the permission.");
+                    }
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     private void showFirstRunGreeting()

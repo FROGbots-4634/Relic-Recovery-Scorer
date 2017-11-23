@@ -1,13 +1,19 @@
 package net.frogbots.relicrecoveryscorecalculator.backend;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
+import android.text.Spanned;
+
 import java.net.InetAddress;
 
-class Utils
+import static net.frogbots.relicrecoveryscorecalculator.backend.ExportScores.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
+
+public class Utils
 {
     static boolean areWeOnline (Context context)
     {
@@ -31,6 +37,26 @@ class Utils
         {
             return false;
         }
+    }
+
+    public static void showSimpleOkDialog(final Activity activity, String msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+        builder1.setMessage(msg);
+        builder1.setCancelable(false);
+        builder1.setNegativeButton(
+                "Ok",
+                new DialogInterface.OnClickListener()
+                {
+                    @SuppressLint("NewApi")
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
     static void showNoInternetDialog(final Activity activity)

@@ -1,9 +1,13 @@
 package net.frogbots.relicrecoveryscorecalculator.backend;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,6 +27,8 @@ import java.util.List;
 
 public class ExportScores
 {
+    public static final int REQUEST_EXTERNAL_STORAGE_PERMISSIONS = 123;
+
     private enum ExportType
     {
         PLAINTEXT,
@@ -31,7 +37,21 @@ public class ExportScores
         CSVnew
     }
 
-    public static void export(final Context context, final Scores scores)
+    public static void exportWithPermissionsWrapper(final Activity activity, final Scores scores)
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            int hasWriteStoragePermission = activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED)
+            {
+                activity.requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE_PERMISSIONS);
+                return;
+            }
+        }
+        export(activity, scores);
+    }
+
+    private static void export(final Context context, final Scores scores)
     {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Export to...");
