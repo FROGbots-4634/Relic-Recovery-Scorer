@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ class Timer
         timer = (TextView) activity.findViewById(R.id.timer);
         progressBar = (ProgressBar) activity.findViewById(R.id.progressBar);
         imageView = (ImageView) activity.findViewById(R.id.imageView2);
+        mediaPlayer = MediaPlayer.create(activity, R.raw.mc_begin_auto);
     }
 
     void showStartDialog(Context context)
@@ -87,6 +89,7 @@ class Timer
             if (mediaPlayer.isPlaying())
             {
                 mediaPlayer.stop();
+                Log.e("app", "stopping media player");
             }
         } catch (Exception e)
         {
@@ -105,53 +108,95 @@ class Timer
     private void autoTimer()
     {
         progressBar.setMax(300);
+        progressBar.setProgress(300);
         progressBar.setProgressDrawable(activity.getResources().getDrawable(R.drawable.progress_drawable_green));
+        timer.setText("MC talking...");
 
-        mediaPlayer = MediaPlayer.create(activity, R.raw.charge);
+        mediaPlayer.reset();
+        mediaPlayer = MediaPlayer.create(activity, R.raw.mc_begin_auto);
         mediaPlayer.start();
 
-        countDownTimer = new CountDownTimer(30000, 100)
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
-            public void onTick(long millisUntilFinished)
+            @Override
+            public void onCompletion (MediaPlayer mediaPlayer)
             {
-                String time;
-
-
-                int seconds = (int) (millisUntilFinished / 1000) % 60;
-                int minutes = (int) ((millisUntilFinished / (1000 * 60)) % 60);
-
-                time = "2:" + formatSeconds(seconds);
-
-                timer.setText("[Autonomous] " + time);
-
-                progressBar.setProgress((int) ((millisUntilFinished) / 100));
-            }
-
-            public void onFinish()
-            {
-                MediaPlayer mPlayer = MediaPlayer.create(activity, R.raw.endauto);
-                mPlayer.start();
-                mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                /*
+                 * One would think this boolean check is redundant,
+                 * however, there is a delay when stopping system services
+                 * so bugs can occur with very precise timing of pressing
+                 * the stop button
+                 */
+                if(running)
                 {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer)
+                    mediaPlayer.reset();
+                    mediaPlayer = MediaPlayer.create(activity, R.raw.charge);
+                    mediaPlayer.start();
+
+                    countDownTimer = new CountDownTimer(30000, 100)
                     {
-                        autoToTeleTransitionTimer();
-                    }
-                });
+                        boolean played20secondsLeftWhistle = false;
+                        MediaPlayer mp2 = MediaPlayer.create(activity, R.raw.factwhistle);
+
+                        public void onTick(long millisUntilFinished)
+                        {
+                            String time;
+
+
+                            int seconds = (int) (millisUntilFinished / 1000) % 60;
+                            int minutes = (int) ((millisUntilFinished / (1000 * 60)) % 60);
+
+                            time = "2:" + formatSeconds(seconds);
+
+                            timer.setText("[Autonomous] " + time);
+
+                            progressBar.setProgress((int) ((millisUntilFinished) / 100));
+
+                            if(!played20secondsLeftWhistle && (millisUntilFinished <= 21000))
+                            {
+                                played20secondsLeftWhistle = true;
+                                mp2.start();
+                            }
+                        }
+
+                        public void onFinish()
+                        {
+                            MediaPlayer mPlayer = MediaPlayer.create(activity, R.raw.endauto);
+                            mPlayer.start();
+                            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+                            {
+                                @Override
+                                public void onCompletion(MediaPlayer mediaPlayer)
+                                {
+                                    /*
+                                     * One would think this boolean check is redundant,
+                                     * however, there is a delay when stopping system services
+                                     * so bugs can occur with very precise timing of pressing
+                                     * the stop button
+                                     */
+                                    if(running)
+                                    {
+                                        autoToTeleTransitionTimer();
+                                    }
+                                }
+                            });
+                        }
+                    }.start();
+                }
             }
-        }.start();
+        });
     }
 
     private void autoToTeleTransitionTimer()
     {
-        progressBar.setMax(50);
+        progressBar.setMax(65);
         progressBar.setProgressDrawable(activity.getResources().getDrawable(R.drawable.progress_drawable_orange));
 
-        mediaPlayer = MediaPlayer.create(activity, R.raw.factwhistle);
+        mediaPlayer.reset();
+        mediaPlayer = MediaPlayer.create(activity, R.raw.mc_begin_teleop);
         mediaPlayer.start();
 
-        countDownTimer = new CountDownTimer(5000, 100)
+        countDownTimer = new CountDownTimer(6500, 100)
         {
             public void onTick(long millisUntilFinished)
             {
@@ -168,7 +213,8 @@ class Timer
                 progressBar.setProgress((int) ((millisUntilFinished) / 100));
             }
 
-            public void onFinish()
+            @Override
+            public void onFinish ()
             {
                 teleopTimer();
             }
@@ -181,6 +227,7 @@ class Timer
         progressBar.setMax(900);
         progressBar.setProgressDrawable(activity.getResources().getDrawable(R.drawable.progress_drawable_blue));
 
+        mediaPlayer.reset();
         mediaPlayer = MediaPlayer.create(activity, R.raw.firebell);
         mediaPlayer.start();
 
@@ -218,6 +265,7 @@ class Timer
         progressBar.setMax(300);
         progressBar.setProgressDrawable(activity.getResources().getDrawable(R.drawable.progress_drawable_red));
 
+        mediaPlayer.reset();
         mediaPlayer = MediaPlayer.create(activity, R.raw.factwhistle);
         mediaPlayer.start();
 
@@ -241,6 +289,7 @@ class Timer
             public void onFinish()
             {
                 timer.setText("That's the end of the match!");
+                mediaPlayer.reset();
                 mediaPlayer = MediaPlayer.create(activity, R.raw.endmatch);
                 mediaPlayer.start();
             }

@@ -44,11 +44,12 @@ public class TOA_queryHighscore
             {
                 try
                 {
+                    toaProgressDialog.setMessage("Checking internet connectivity...");
                     if(Utils.areWeOnline(activity))
                     {
                         //Thread.sleep(1000);
 
-                        showResult(activity, formatHighscoreMessage(getHighscore()));
+                        showResult(activity, formatHighscoreMessage(getHighscore(activity, toaProgressDialog)));
 
                         dismissProgressDialog(activity);
                     }
@@ -136,10 +137,34 @@ public class TOA_queryHighscore
                 + " alliance in match " + highscore.matchKey;
     }
 
-    private static Highscore getHighscore () throws JSONException, IOException
+    private static Highscore getHighscore (Activity activity, final ProgressDialog toaProgressDialog) throws JSONException, IOException
     {
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run ()
+            {
+                toaProgressDialog.setMessage("Downloading 1/3");
+            }
+        });
         Highscore noPenaltyElims = downloadAndParseHighscore(TOA_HIGHSCORE_ELIM_WITHOUT_PENALTY_URL);
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run ()
+            {
+                toaProgressDialog.setMessage("Downloading 2/3");
+            }
+        });
         Highscore noPenaltyQuals = downloadAndParseHighscore(TOA_HIGHSCORE_QUAL_WITHOUT_PENALTY_URL);
+        activity.runOnUiThread(new Runnable()
+        {
+            @Override
+            public void run ()
+            {
+                toaProgressDialog.setMessage("Downloading 3/3");
+            }
+        });
         Highscore highWithPenaltyAfterSubtraction = downloadAndParseHighscore(TOA_HIGHSCORE_WITH_PENALTY_URL);
 
         if(noPenaltyElims.score > noPenaltyQuals.score)
