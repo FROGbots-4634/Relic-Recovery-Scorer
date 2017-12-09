@@ -63,19 +63,7 @@ public class ExportScores
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                switch (which)
-                {
-                    case 0: //Plaintext
-                        beginPlaintextExport(context, scores);
-                        break;
-
-                    case 1: //CSV
-                        beginCSVExport(context, scores);
-                        break;
-
-                    case 2: //Google Sheets
-                        break;
-                }
+                getCommentAndPerformExport(context, scores, which);
             }
         });
 
@@ -84,11 +72,59 @@ public class ExportScores
         dialog.show();
     }
 
+    private static void getCommentAndPerformExport(final Context context, final Scores scores, final int type)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(false);
+        builder.setTitle("Enter a unique identifier comment");
+
+        // Set up the input
+        final EditText input = new EditText(context);
+
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                String comment = input.getText().toString();
+
+                switch (type)
+                {
+                    case 0: //Plaintext
+                        beginPlaintextExport(context, comment, scores);
+                        break;
+
+                    case 1: //CSV
+                        beginCSVExport(context, comment, scores);
+                        break;
+
+                    case 2: //Google Sheets
+                        break;
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
     /*
      * Check the filename
      */
     @SuppressLint("SdCardPath")
-    private static void beginPlaintextExport(final Context context, final Scores scores)
+    private static void beginPlaintextExport(final Context context, final String comment, final Scores scores)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
@@ -165,7 +201,7 @@ public class ExportScores
                                 {
                                     public void onClick(DialogInterface dialog, int id)
                                     {
-                                        export(context, ExportType.PLAINTEXT, exportFile, scores);
+                                        export(context, ExportType.PLAINTEXT, exportFile, comment, scores);
                                     }
                                 });
 
@@ -184,7 +220,7 @@ public class ExportScores
                     }
                     else
                     {
-                        export(context, ExportType.PLAINTEXT, exportFile, scores);
+                        export(context, ExportType.PLAINTEXT, exportFile, comment, scores);
                     }
                 }
             }
@@ -201,18 +237,18 @@ public class ExportScores
         builder.show();
     }
 
-    static private void export (Context context, ExportType exportType, File exportFile, Scores scores)
+    static private void export (Context context, ExportType exportType, File exportFile, String comment, Scores scores)
     {
         switch (exportType)
         {
             case PLAINTEXT:
-                plaintextExport(context, exportFile, scores);
+                plaintextExport(context, exportFile, comment, scores);
                 break;
 
             case CSV:
                 try
                 {
-                    exportCSV(context, exportFile, scores);
+                    exportCSV(context, exportFile, comment, scores);
                 }
                 catch (IOException e)
                 {
@@ -226,7 +262,7 @@ public class ExportScores
             case CSVnew:
                 try
                 {
-                    saveNewEntry(context, exportFile, scores);
+                    saveNewEntry(context, exportFile, comment, scores);
                 }
                 catch (IOException e)
                 {
@@ -236,7 +272,7 @@ public class ExportScores
         }
     }
 
-    private static void plaintextExport(Context context, File exportFile, Scores scores)
+    private static void plaintextExport(Context context, File exportFile, String comment, Scores scores)
     {
         try
         {
@@ -252,7 +288,8 @@ public class ExportScores
             @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
             outputWriter.write(df.format(Calendar.getInstance().getTime()));
 
-            outputWriter.write("\r\n\r\nJewel: "                  + jewelForExport(scores.getAutonomousJewelLevel()));
+            outputWriter.write("\r\n\r\nComment: "                + comment);
+            outputWriter.write("\r\nJewel: "                      + jewelForExport(scores.getAutonomousJewelLevel()));
             outputWriter.write("\r\nPre-loaded glyph: "           + glyphForExport(scores.getAutonomousPreloadedGlyphLevel()));
             outputWriter.write("\r\n[Auto] glyphs scored: "       + scores.getAutonomousGlyphsScored());
             outputWriter.write("\r\nAutonomous parking: "         + (scores.getParkingLevel() > 0));
@@ -344,49 +381,51 @@ public class ExportScores
         return result;
     }
 
-    private static void exportCSV (Context context, File file, Scores scores) throws IOException
+    private static void exportCSV (Context context, File file, String comment, Scores scores) throws IOException
     {
         String array[][] = new String[2][16];
 
         array[0][0]  = ("Time");
-        array[0][1]  = ("Jewel");
-        array[0][2]  = ("Pre-loaded glyph");
-        array[0][3]  = ("[Auto] glyphs scored");
-        array[0][4]  = ("Autonomous parking");
-        array[0][5]  = ("[Tele-Op] glyphs scored");
-        array[0][6]  = ("Cryptobox rows complete");
-        array[0][7]  = ("Cryptobox columns complete");
-        array[0][8]  = ("Cipher completed");
-        array[0][9]  = ("Relic position");
-        array[0][10] = ("Relic upright");
-        array[0][11] = ("Robot balanced");
-        array[0][12] = ("Minor penalties");
-        array[0][13] = ("Major penalties");
-        array[0][14] = ("TOTAL SCORE");
+        array[0][1]  = ("Comment");
+        array[0][2]  = ("Jewel");
+        array[0][3]  = ("Pre-loaded glyph");
+        array[0][4]  = ("[Auto] glyphs scored");
+        array[0][5]  = ("Autonomous parking");
+        array[0][6]  = ("[Tele-Op] glyphs scored");
+        array[0][7]  = ("Cryptobox rows complete");
+        array[0][8]  = ("Cryptobox columns complete");
+        array[0][9]  = ("Cipher completed");
+        array[0][10] = ("Relic position");
+        array[0][11] = ("Relic upright");
+        array[0][12] = ("Robot balanced");
+        array[0][13] = ("Minor penalties");
+        array[0][14] = ("Major penalties");
+        array[0][15] = ("TOTAL SCORE");
 
-        writeScoresToRow(array, scores, 1);
+        writeScoresToRow(array, comment, scores, 1);
         saveToCSV(context, file, array);
     }
 
-    private static void writeScoresToRow (String[][] array, Scores scores, int rowNumber)
+    private static void writeScoresToRow (String[][] array, String comment, Scores scores, int rowNumber)
     {
         @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("EEE d MMM yyyy HH:mm");
 
         array[rowNumber][0]  = (df.format(Calendar.getInstance().getTime()));
-        array[rowNumber][1]  = jewelForExport(scores.getAutonomousJewelLevel());
-        array[rowNumber][2]  = (glyphForExport(scores.getAutonomousPreloadedGlyphLevel()));
-        array[rowNumber][3]  = Integer.toString(scores.getAutonomousGlyphsScored());
-        array[rowNumber][4]  = Boolean.toString(scores.getParkingLevel() > 0);
-        array[rowNumber][5]  = Integer.toString(scores.getTeleOpGlyphsScored());
-        array[rowNumber][6]  = Integer.toString(scores.getTeleopCryptoboxRowsComplete());
-        array[rowNumber][7]  = Integer.toString(scores.getTeleopCryptoboxColumnsComplete());
-        array[rowNumber][8]  = Boolean.toString(scores.getTeleopCipherLevel() > 0);
-        array[rowNumber][9]  = Integer.toString(scores.getEndgameRelicPosition());
-        array[rowNumber][10] = Boolean.toString(scores.getEndgameRelicOrientation() > 0);
-        array[rowNumber][11] = Boolean.toString(scores.getEndgameRobotBalanced() > 0);
-        array[rowNumber][12] = Integer.toString(scores.getNumMinorPenalties());
-        array[rowNumber][13] = Integer.toString(scores.getNumMajorPenalties());
-        array[rowNumber][14] = Integer.toString(scores.getTotalScore());
+        array[rowNumber][1]  = comment;
+        array[rowNumber][2]  = jewelForExport(scores.getAutonomousJewelLevel());
+        array[rowNumber][3]  = (glyphForExport(scores.getAutonomousPreloadedGlyphLevel()));
+        array[rowNumber][4]  = Integer.toString(scores.getAutonomousGlyphsScored());
+        array[rowNumber][5]  = Boolean.toString(scores.getParkingLevel() > 0);
+        array[rowNumber][6]  = Integer.toString(scores.getTeleOpGlyphsScored());
+        array[rowNumber][7]  = Integer.toString(scores.getTeleopCryptoboxRowsComplete());
+        array[rowNumber][8]  = Integer.toString(scores.getTeleopCryptoboxColumnsComplete());
+        array[rowNumber][9]  = Boolean.toString(scores.getTeleopCipherLevel() > 0);
+        array[rowNumber][10]  = Integer.toString(scores.getEndgameRelicPosition());
+        array[rowNumber][11] = Boolean.toString(scores.getEndgameRelicOrientation() > 0);
+        array[rowNumber][12] = Boolean.toString(scores.getEndgameRobotBalanced() > 0);
+        array[rowNumber][13] = Integer.toString(scores.getNumMinorPenalties());
+        array[rowNumber][14] = Integer.toString(scores.getNumMajorPenalties());
+        array[rowNumber][15] = Integer.toString(scores.getTotalScore());
     }
 
     private static void saveToCSV (Context context, File file, String[][] array) throws IOException
@@ -415,7 +454,7 @@ public class ExportScores
     }
 
     @SuppressLint("SdCardPath")
-    private static void beginCSVExport (final Context context, final Scores scores)
+    private static void beginCSVExport (final Context context, final String comment, final Scores scores)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false);
@@ -492,7 +531,7 @@ public class ExportScores
                                 {
                                     public void onClick(DialogInterface dialog, int id)
                                     {
-                                        export(context, ExportType.CSVnew, exportFile, scores);
+                                        export(context, ExportType.CSVnew, exportFile, comment, scores);
                                     }
                                 });
 
@@ -511,7 +550,7 @@ public class ExportScores
                     }
                     else
                     {
-                        export(context, ExportType.CSV, exportFile, scores);
+                        export(context, ExportType.CSV, exportFile, comment, scores);
                     }
                 }
             }
@@ -537,13 +576,13 @@ public class ExportScores
         return dataArr;
     }
 
-    private static void saveNewEntry (Context context, File file, Scores scores) throws IOException
+    private static void saveNewEntry (Context context, File file, String comment, Scores scores) throws IOException
     {
         String[][] readArray = readCSV(file);
         int count = readArray.length;
         String[][] out = new String[count+1][16];
         arrayCopy(readArray, out);
-        writeScoresToRow(out,scores,count);
+        writeScoresToRow(out, comment, scores, count);
         saveToCSV(context, file, out);
     }
 
