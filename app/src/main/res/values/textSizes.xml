@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="scoreHeaderTextSize">40dp</dimen>
-    <dimen name="cardHeadingTextSize">16dp</dimen>
-    <dimen name="itemIncrementerCountTextSize">22dp</dimen>
+    <dimen name="scoreHeaderTextSize">34sp</dimen>
+    <dimen name="sectionHeadingTextSize">24sp</dimen>
+    <dimen name="cardHeadingTextSize">16sp</dimen>
+    <dimen name="itemIncrementerCountTextSize">22sp</dimen>
 </resources>

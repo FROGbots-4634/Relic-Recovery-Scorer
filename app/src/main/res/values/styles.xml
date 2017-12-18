@@ -1,12 +1,39 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyleToggle">@style/CustomToggleBtnStyle</item>
-        <item name="android:spinnerItemStyle">@style/spinnerTextBlack</item>
+        <item name="android:spinnerItemStyle">@style/Widget.AppCompat.TextView.SpinnerItem</item>
         <item name="android:spinnerStyle">@style/lightSpinnerStyle</item>
         <item name="android:buttonStyle">@style/CustomBtnStyle</item>
         <item name="android:imageButtonStyle">@style/CustomImageBtnStyle</item>
+    </style>
+
+    <style name="AutonomousTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/autonomous</item>
+        <item name="colorPrimaryDark">@color/autonomous_dark</item>
+        <item name="colorAccent">@color/autonomous</item>
+    </style>
+
+    <style name="TeleOpTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/teleop</item>
+        <item name="colorPrimaryDark">@color/teleop_dark</item>
+        <item name="colorAccent">@color/teleop</item>
+    </style>
+
+    <style name="EndGameTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/endgame</item>
+        <item name="colorPrimaryDark">@color/endgame_dark</item>
+        <item name="colorAccent">@color/endgame</item>
+    </style>
+
+    <style name="PenaltyTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/penalty</item>
+        <item name="colorPrimaryDark">@color/penalty_dark</item>
+        <item name="colorAccent">@color/penalty</item>
     </style>
 
     <style name="CustomToggleBtnStyle" parent="@android:style/Widget.Holo.Button.Toggle">
@@ -14,21 +41,26 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="CustomBtnStyle" parent="@android:style/Widget.Holo.Button">
-        <item name="android:background">@drawable/btn_dark</item>
+    <style name="CustomBtnStyle" parent="Widget.AppCompat.Button" />
+
+    <style name="CustomImageBtnStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:tint">?attr/colorAccent</item>
+    </style>
+
+    <style name="lightSpinnerStyle" parent="@style/Widget.AppCompat.Spinner">
+        <item name="android:spinnerStyle">@style/Widget.AppCompat.Spinner</item>
+        <item name="android:padding">@dimen/padding_s</item>
+    </style>
+
+    <style name="CardHeader">
         <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <style name="CustomImageBtnStyle" parent="@android:style/Widget.Holo.ImageButton">
-        <item name="android:background">@drawable/btn_dark</item>
-    </style>
-
-    <style name="spinnerTextBlack" parent="@android:style/Widget.Holo.TextView.SpinnerItem">
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="lightSpinnerStyle" parent="@android:style/Widget.Holo.Light.Spinner">
-        <item name="android:spinnerStyle">@android:style/Widget.Holo.Light.Spinner</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/padding_s</item>
+        <item name="android:layout_marginRight">@dimen/padding_s</item>
+        <item name="android:background">@drawable/bg_card_header</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/cardHeadingTextSize</item>
     </style>
 
 </resources>

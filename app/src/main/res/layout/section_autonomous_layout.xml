@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AutonomousTheme"
+    android:background="?attr/colorPrimary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/autonomous"
     android:orientation="vertical">
 
     <TextView
@@ -11,26 +12,26 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
         android:layout_gravity="center"
-        android:layout_marginTop="5sp"
+        android:layout_marginTop="@dimen/padding_s"
         android:text="Autonomous"
-        android:textSize="30sp" />
+        android:textSize="@dimen/sectionHeadingTextSize" />
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/padding_m"
         layout="@layout/card_autonomous_jewel" />
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/padding_m"
         layout="@layout/category_autonomous_glyphs" />
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/padding_m"
         layout="@layout/card_autonomous_parking" />
 
 </LinearLayout>

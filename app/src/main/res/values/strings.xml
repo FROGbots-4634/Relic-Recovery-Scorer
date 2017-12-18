@@ -1,3 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="app_name">Relic Recovery Scorer</string>
+    <string name="timer_not_running">Timer not running</string>
+    <string name="cat_header_jewel">Jewels</string>
+    <string name="section_header_endgame">Endgame</string>
+    <string name="desc_relic_position">Relic Position</string>
+    <string name="desc_num_glyphs">Number of Glyphs scored in Cryptobox\n(Does NOT inlcude pre-loaded from above)</string>
+    <string name="desc_relic_orientation">Relic Orientation</string>
+    <string name="desc_parking">Parking</string>
+    <string name="desc_preload_glyph">Pre-loaded Glyph</string>
+    <string name="desc_penalty_major">Major Penalties</string>
+    <string name="desc_penalty_minor">Minor Penalties</string>
+    <string name="alt_plus">A plus sign.</string>
+    <string name="desc_cryptobox_cipher">Completed Cipher</string>
+    <string name="desc_cryptobox_columns">Cryptobox COLUMNs complete</string>
+    <string name="desc_cryptobox_rows">Cryptobox ROWs complete</string>
+    <string name="desc_cryptobox_glyphs">Glyphs scored in Cryptobox</string>
 </resources>
