@@ -16,4 +16,8 @@
     <string name="desc_cryptobox_columns">Cryptobox COLUMNs complete</string>
     <string name="desc_cryptobox_rows">Cryptobox ROWs complete</string>
     <string name="desc_cryptobox_glyphs">Glyphs scored in Cryptobox</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="menu_item_about">About</string>
+    <string name="menu_item_clear">Clear Scores</string>
+    <string name="menu_item_export">Export Scores</string>
 </resources>

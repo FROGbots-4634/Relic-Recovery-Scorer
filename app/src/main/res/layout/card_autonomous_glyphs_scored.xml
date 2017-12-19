@@ -1,6 +1,5 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                    xmlns:style="http://schemas.android.com/tools"
                                     android:id="@+id/card_view"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -31,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:tint="@color/autonomous"
                 android:src="@drawable/increment_positive"/>
 
             <TextView
@@ -48,8 +46,8 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/autonomous_glyphsInCryptoboxMinus"
                 android:src="@drawable/increment_negative"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
-                android:tint="@color/autonomous"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_height="wrap_content" />
 
         </RelativeLayout>

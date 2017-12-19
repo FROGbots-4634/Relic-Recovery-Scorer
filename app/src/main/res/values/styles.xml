@@ -4,12 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/purple</item>
         <item name="android:buttonStyleToggle">@style/CustomToggleBtnStyle</item>
         <item name="android:spinnerItemStyle">@style/Widget.AppCompat.TextView.SpinnerItem</item>
         <item name="android:spinnerStyle">@style/lightSpinnerStyle</item>
         <item name="android:buttonStyle">@style/CustomBtnStyle</item>
         <item name="android:imageButtonStyle">@style/CustomImageBtnStyle</item>
+        <item name="android:panelBackground">@android:color/white</item>
     </style>
 
     <style name="AutonomousTheme" parent="AppTheme">
@@ -41,9 +42,9 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="CustomBtnStyle" parent="Widget.AppCompat.Button" />
+    <style name="CustomBtnStyle" parent="Widget.AppCompat.Button"/>
 
-    <style name="CustomImageBtnStyle" parent="Widget.AppCompat.Button.Borderless.Colored">
+    <style name="CustomImageBtnStyle" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:tint">?attr/colorAccent</item>
     </style>
 
@@ -62,5 +63,9 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/cardHeadingTextSize</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
 </resources>
