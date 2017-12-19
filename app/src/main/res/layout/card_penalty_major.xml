@@ -11,23 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="@dimen/padding_s"
+        android:paddingTop="@dimen/padding_s">
 
         <TextView
             android:id="@+id/card_penalty_major_header_txtView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/header_rounded_corner_penalty"
-            android:gravity="center"
-            android:text="Major Penalties"
-            android:textSize="@dimen/cardHeadingTextSize" />
+            android:text="@string/desc_penalty_major"
+            style="@style/CardHeader"
+            />
 
         <RelativeLayout
-            android:padding="5dp"
+            android:padding="@dimen/padding_s"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

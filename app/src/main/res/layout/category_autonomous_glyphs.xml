@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="@dimen/padding_s"
+        android:paddingTop="@dimen/padding_s">
 
         <TextView
             android:id="@+id/category_autonomous_glyphs_header_txtView"
@@ -20,19 +20,23 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Glyphs"
-            android:layout_marginTop="5sp"
+            android:layout_marginTop="4dp"
             android:textSize="24sp" />
 
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="@dimen/padding_s"
+            android:layout_marginLeft="@dimen/padding_s"
+            android:layout_marginRight="@dimen/padding_s"
             layout="@layout/card_autonomous_preloaded_glyph" />
 
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginTop="@dimen/padding_s"
+            android:layout_marginLeft="@dimen/padding_s"
+            android:layout_marginRight="@dimen/padding_s"
             layout="@layout/card_autonomous_glyphs_scored" />
 
     </LinearLayout>

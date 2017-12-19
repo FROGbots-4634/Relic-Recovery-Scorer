@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-        android:id="@+id/aboutMenuItem"
-        android:showAsAction="never"
-        android:title="About" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/clearMenuItem"
-        android:showAsAction="never"
-        android:title="Clear Scores" />
+        android:icon="@drawable/ic_clear"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_item_clear" />
+
+    <item
+        android:id="@+id/aboutMenuItem"
+        app:showAsAction="never"
+        android:title="@string/menu_item_about" />
 
     <item
         android:id="@+id/exportMenuItem"
-        android:showAsAction="never"
-        android:title="Export Scores" />
+        android:icon="@drawable/ic_export"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_item_export" />
 
     <item
         android:id="@+id/queryHighscoreMenuItem"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="Query Highscore" />
 
     <item
         android:id="@+id/exitMenuItem"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="Exit" />
 
 </menu>

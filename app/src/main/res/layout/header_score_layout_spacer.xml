@@ -12,58 +12,52 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:visibility="invisible"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
 
             <TextView
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
                 android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Score: 32"
-                android:textSize="@dimen/scoreHeaderTextSize" />
+                android:layout_centerVertical="true"
+                android:text="Score: 0"
+                android:textSize="@dimen/scoreHeaderTextSize"/>
 
-            <ImageView
+            <ImageButton
+                android:tint="@android:color/white"
                 android:layout_width="wrap_content"
-                android:layout_alignTop="@id/scoreView"
-                android:paddingLeft="5dp"
-                android:layout_alignBottom="@id/scoreView"
+                android:padding="@dimen/padding_s"
+                android:layout_centerVertical="true"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_play_arrow"/>
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:visibility="invisible"
-            android:layout_height="wrap_content" >
-
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:progressDrawable="@drawable/progress_drawable_blue"
-                style="@android:style/Widget.ProgressBar.Horizontal"
-                android:padding="10dp"
-                android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/cardHeadingTextSize"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="Timer not running"
-                android:layout_alignLeft="@id/progressBar"
-                android:layout_alignTop="@id/progressBar"
-                android:layout_alignRight="@id/progressBar"
-                android:layout_alignBottom="@id/progressBar"
+                android:text="@string/timer_not_running"
+                android:layout_marginBottom="@dimen/padding_s"
                 android:background="@android:color/transparent"/>
 
-        </RelativeLayout>
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:progressDrawable="@drawable/progress_drawable_blue"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_height="4dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

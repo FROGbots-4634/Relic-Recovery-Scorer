@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">@color/purple</color>
+    <color name="colorPrimaryDark">@color/purple_dark</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="scoreHeader">#7b7b86</color>
@@ -23,6 +23,7 @@
     <color name="button_color">#6b6666</color>
 
     <color name="purple">#754e80</color>
+    <color name="purple_dark">#694673</color>
     <color name="purple_transparent">#e1754e80</color>
 
     <color name="summary">#615b63</color>

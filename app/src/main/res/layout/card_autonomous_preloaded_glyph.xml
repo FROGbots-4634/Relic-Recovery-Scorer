@@ -11,24 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="@dimen/padding_s"
+        android:paddingTop="@dimen/padding_s">
 
         <TextView
             android:id="@+id/card_autonomous_glyph_header_txtView"
-            android:textColor="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/header_rounded_corner_autonomous"
-            android:gravity="center"
-            android:text="Pre-loaded Glyph"
-            android:textSize="@dimen/cardHeadingTextSize" />
+            android:text="@string/desc_preload_glyph"
+            style="@style/CardHeader"
+            />
 
         <Spinner
             android:id="@+id/card_autonomous_glyph_spinner"
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />

@@ -1,0 +1,6 @@
+<resources>
+    <style name="AutoImageBtnStyle" parent="CustomImageBtnStyle">
+        <item name="android:tint">@color/autonomous</item>
+        <item name="android:colorControlHighlight">@color/autonomous</item>
+    </style>
+</resources>

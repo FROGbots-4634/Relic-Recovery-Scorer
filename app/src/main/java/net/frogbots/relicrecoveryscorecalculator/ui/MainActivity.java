@@ -152,6 +152,15 @@ public class MainActivity extends Activity
             }
         });
 
+        (findViewById(R.id.button_menu)).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View view)
+            {
+                openOptionsMenu();
+            }
+        });
+
     }
 
     @Override

@@ -1,6 +1,5 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                    xmlns:style="http://schemas.android.com/tools"
                                     android:id="@+id/card_view"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
@@ -11,32 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:paddingBottom="@dimen/padding_s"
+        android:paddingTop="@dimen/padding_s">
 
         <TextView
             android:id="@+id/card_autonomous_glypsInCryptobox_header_txtView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/header_rounded_corner_autonomous"
-            android:gravity="center"
-            android:text="Number of Glyphs scored in Cryptobox\n(Does NOT inlcude pre-loaded from above)"
-            android:textSize="@dimen/cardHeadingTextSize" />
+            android:text="@string/desc_num_glyphs"
+            style="@style/CardHeader"
+            />
 
         <RelativeLayout
-            android:padding="5dp"
+            android:padding="@dimen/padding_s"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:layout_width="wrap_content"
                 android:id="@+id/autonomous_glyphsInCryptoboxPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/increment_positive"
-                android:layout_height="wrap_content" />
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/increment_positive"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,6 +46,8 @@
                 android:layout_width="wrap_content"
                 android:id="@+id/autonomous_glyphsInCryptoboxMinus"
                 android:src="@drawable/increment_negative"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_height="wrap_content" />
 
         </RelativeLayout>

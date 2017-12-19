@@ -4,24 +4,26 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 import net.frogbots.relicrecoveryscorecalculator.R;
 
-public class AboutActivity extends Activity
+public class AboutActivity extends AppCompatActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar_about));
 
         /*
          * Make the action bar a button to navigate back
          */
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setTitle("About");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /*
          * Visit our website
@@ -73,7 +75,7 @@ public class AboutActivity extends Activity
      * The method that's called when the user presses the title back button
      */
     @Override
-    public boolean onNavigateUp()
+    public boolean onSupportNavigateUp()
     {
         finish();
         return true;
