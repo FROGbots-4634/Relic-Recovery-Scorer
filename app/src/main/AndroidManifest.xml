@@ -28,7 +28,7 @@
             android:name=".ui.AboutActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
