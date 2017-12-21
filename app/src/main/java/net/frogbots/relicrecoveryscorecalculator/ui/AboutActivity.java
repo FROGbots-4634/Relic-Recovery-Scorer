@@ -2,17 +2,23 @@ package net.frogbots.relicrecoveryscorecalculator.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import net.frogbots.relicrecoveryscorecalculator.BuildConfig;
 import net.frogbots.relicrecoveryscorecalculator.R;
+
+import java.util.Date;
 
 public class AboutActivity extends Activity
 {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
@@ -30,7 +36,7 @@ public class AboutActivity extends Activity
         vistOurWebsiteBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
+            public void onClick (View view)
             {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse("https://frogbots.net"));
@@ -45,7 +51,7 @@ public class AboutActivity extends Activity
         vistOurYoutubeChannelBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
+            public void onClick (View view)
             {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse("https://www.youtube.com/channel/UCDNv6JsbwZG4mD7O31jFW-Q"));
@@ -60,20 +66,25 @@ public class AboutActivity extends Activity
         sendUsAnEmailBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View view)
+            public void onClick (View view)
             {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto: apps@frogbots.net"));
                 startActivity(Intent.createChooser(emailIntent, "Send feedback"));
             }
         });
+
+        Date buildDate = new Date(BuildConfig.TIMESTAMP);
+        String version = BuildConfig.VERSION_NAME;
+        TextView versionTextView = (TextView) findViewById(R.id.versionTextView);
+        versionTextView.setText("App v" + version + "\nBuilt on " + buildDate.toString());
     }
 
     /*
      * The method that's called when the user presses the title back button
      */
     @Override
-    public boolean onNavigateUp()
+    public boolean onNavigateUp ()
     {
         finish();
         return true;
