@@ -1,17 +1,13 @@
 package net.frogbots.relicrecoveryscorecalculator.backend;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
-import android.text.Spanned;
 
 import java.net.InetAddress;
-
-import static net.frogbots.relicrecoveryscorecalculator.backend.ExportScores.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
 
 public class Utils
 {

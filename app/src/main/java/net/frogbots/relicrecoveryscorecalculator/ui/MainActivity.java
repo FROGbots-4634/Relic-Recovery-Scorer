@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +20,9 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.frogbots.relicrecoveryscorecalculator.R;
-import net.frogbots.relicrecoveryscorecalculator.backend.ExportScores;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportScores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
@@ -32,7 +30,6 @@ import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 @SuppressLint("SetTextI18n")
 public class MainActivity extends Activity
 {
-    Scores scores = new Scores();
     Summary summary;
 
     /*
@@ -234,8 +231,8 @@ public class MainActivity extends Activity
             relicOrientationSpinner.setEnabled(true);
         }
         TextView scoreView = (TextView) findViewById(R.id.scoreView);
-        scoreView.setText("Score: " + Integer.toString(scores.getTotalScore()));
-        summary.updateSummary(scores);
+        scoreView.setText("Score: " + Integer.toString(Scores.getTotalScore()));
+        summary.updateSummary();
     }
 
     private void resetScores()
@@ -270,7 +267,7 @@ public class MainActivity extends Activity
         penaltiesMajorMinus.setEnabled(false);
         penaltiesMajorTxtView.setText("0");
 
-        scores.clearAllScores();
+        Scores.clearAllScores();
         calcScore();
 
         timer.stop();
@@ -287,11 +284,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.positiveIncrementAutonomousGlyphsScored();
-                autonomousGlyphsScoredTxtView.setText(Integer.toString(scores.getAutonomousGlyphsScored()));
+                Scores.positiveIncrementAutonomousGlyphsScored();
+                autonomousGlyphsScoredTxtView.setText(Integer.toString(Scores.getAutonomousGlyphsScored()));
                 calcScore();
 
-                if (scores.getAutonomousGlyphsScored() > 0)
+                if (Scores.getAutonomousGlyphsScored() > 0)
                 {
                     autonomousGlyphsScoredMinus.setEnabled(true);
                 }
@@ -303,11 +300,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.negativeIncrementAutonomousGlyphsScored();
-                autonomousGlyphsScoredTxtView.setText(Integer.toString(scores.getAutonomousGlyphsScored()));
+                Scores.negativeIncrementAutonomousGlyphsScored();
+                autonomousGlyphsScoredTxtView.setText(Integer.toString(Scores.getAutonomousGlyphsScored()));
                 calcScore();
 
-                if (scores.getAutonomousGlyphsScored() < 1)
+                if (Scores.getAutonomousGlyphsScored() < 1)
                 {
                     autonomousGlyphsScoredMinus.setEnabled(false);
                 }
@@ -324,11 +321,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.positiveIncrementTeleopGlyphsScored();
-                teleopGlyphsInCryptoboxTxtView.setText(Integer.toString(scores.getTeleOpGlyphsScored()));
+                Scores.positiveIncrementTeleopGlyphsScored();
+                teleopGlyphsInCryptoboxTxtView.setText(Integer.toString(Scores.getTeleOpGlyphsScored()));
                 calcScore();
 
-                if (scores.getTeleOpGlyphsScored() > 0)
+                if (Scores.getTeleOpGlyphsScored() > 0)
                 {
                     teleopGlyphsInCryptoboxMinus.setEnabled(true);
                 }
@@ -340,11 +337,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.negativeIncrementTeleopGlyphsScored();
-                teleopGlyphsInCryptoboxTxtView.setText(Integer.toString(scores.getTeleOpGlyphsScored()));
+                Scores.negativeIncrementTeleopGlyphsScored();
+                teleopGlyphsInCryptoboxTxtView.setText(Integer.toString(Scores.getTeleOpGlyphsScored()));
                 calcScore();
 
-                if (scores.getTeleOpGlyphsScored() < 1)
+                if (Scores.getTeleOpGlyphsScored() < 1)
                 {
                     teleopGlyphsInCryptoboxMinus.setEnabled(false);
                 }
@@ -361,16 +358,16 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.positiveIncrementTeleopCryptoboxRowsComplete();
-                teleopCryptoboxRowsCompleteTxtView.setText(Integer.toString(scores.getTeleopCryptoboxRowsComplete()));
+                Scores.positiveIncrementTeleopCryptoboxRowsComplete();
+                teleopCryptoboxRowsCompleteTxtView.setText(Integer.toString(Scores.getTeleopCryptoboxRowsComplete()));
                 calcScore();
 
-                if (scores.getTeleopCryptoboxRowsComplete() > 0)
+                if (Scores.getTeleopCryptoboxRowsComplete() > 0)
                 {
                     teleopCryptoboxRowsCompleteMinus.setEnabled(true);
                 }
 
-                if(scores.getTeleopCryptoboxRowsComplete() > 3)
+                if(Scores.getTeleopCryptoboxRowsComplete() > 3)
                 {
                     teleopCryptoboxRowsCompletePlus.setEnabled(false);
                 }
@@ -382,16 +379,16 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.negativeIncrementTeleopCryptoboxRowsComplete();
-                teleopCryptoboxRowsCompleteTxtView.setText(Integer.toString(scores.getTeleopCryptoboxRowsComplete()));
+                Scores.negativeIncrementTeleopCryptoboxRowsComplete();
+                teleopCryptoboxRowsCompleteTxtView.setText(Integer.toString(Scores.getTeleopCryptoboxRowsComplete()));
                 calcScore();
 
-                if (scores.getTeleopCryptoboxRowsComplete() < 1)
+                if (Scores.getTeleopCryptoboxRowsComplete() < 1)
                 {
                     teleopCryptoboxRowsCompleteMinus.setEnabled(false);
                 }
 
-                if(scores.getTeleopCryptoboxRowsComplete() < 4)
+                if(Scores.getTeleopCryptoboxRowsComplete() < 4)
                 {
                     teleopCryptoboxRowsCompletePlus.setEnabled(true);
                 }
@@ -408,16 +405,16 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.positiveIncrementTeleopCryptoboxColumnsComplete();
-                teleopCryptoboxColumnsCompleteTxtView.setText(Integer.toString(scores.getTeleopCryptoboxColumnsComplete()));
+                Scores.positiveIncrementTeleopCryptoboxColumnsComplete();
+                teleopCryptoboxColumnsCompleteTxtView.setText(Integer.toString(Scores.getTeleopCryptoboxColumnsComplete()));
                 calcScore();
 
-                if (scores.getTeleopCryptoboxColumnsComplete() > 0)
+                if (Scores.getTeleopCryptoboxColumnsComplete() > 0)
                 {
                     teleopCryptoboxColumnsCompleteMinus.setEnabled(true);
                 }
 
-                if(scores.getTeleopCryptoboxColumnsComplete() > 2)
+                if(Scores.getTeleopCryptoboxColumnsComplete() > 2)
                 {
                     teleopCryptoboxColumnsCompletePlus.setEnabled(false);
                 }
@@ -429,16 +426,16 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.negativeIncrementTeleopCryptoboxColumnsComplete();
-                teleopCryptoboxColumnsCompleteTxtView.setText(Integer.toString(scores.getTeleopCryptoboxColumnsComplete()));
+                Scores.negativeIncrementTeleopCryptoboxColumnsComplete();
+                teleopCryptoboxColumnsCompleteTxtView.setText(Integer.toString(Scores.getTeleopCryptoboxColumnsComplete()));
                 calcScore();
 
-                if (scores.getTeleopCryptoboxColumnsComplete() < 1)
+                if (Scores.getTeleopCryptoboxColumnsComplete() < 1)
                 {
                     teleopCryptoboxColumnsCompleteMinus.setEnabled(false);
                 }
 
-                if(scores.getTeleopCryptoboxColumnsComplete() < 3)
+                if(Scores.getTeleopCryptoboxColumnsComplete() < 3)
                 {
                     teleopCryptoboxColumnsCompletePlus.setEnabled(true);
                 }
@@ -469,7 +466,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_autonomous_parking_spinner)
                 {
-                    scores.setParkingLevel(pos);
+                    Scores.setParkingLevel(pos);
                     calcScore();
                 }
             }
@@ -505,7 +502,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_autonomous_jewel_spinner)
                 {
-                    scores.setAutonomousJewelLevel(pos);
+                    Scores.setAutonomousJewelLevel(pos);
                     calcScore();
                 }
             }
@@ -541,7 +538,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_autonomous_glyph_spinner)
                 {
-                    scores.setAutonomousPreloadedGlyphLevel(pos);
+                    Scores.setAutonomousPreloadedGlyphLevel(pos);
                     calcScore();
                 }
             }
@@ -577,7 +574,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_teleop_cipher_spinner)
                 {
-                    scores.setTeleopCipherLevel(pos);
+                    Scores.setTeleopCipherLevel(pos);
                     calcScore();
                 }
             }
@@ -613,7 +610,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_endgame_relic_position_spinner)
                 {
-                    scores.setEndgameRelicPosition(pos);
+                    Scores.setEndgameRelicPosition(pos);
                     calcScore();
                 }
             }
@@ -649,7 +646,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_endgame_relic_orientation_spinner)
                 {
-                    scores.setEndgameRelicOrientation(pos);
+                    Scores.setEndgameRelicOrientation(pos);
                     calcScore();
                 }
             }
@@ -685,7 +682,7 @@ public class MainActivity extends Activity
             {
                 if (adapterView.getId() == R.id.card_endgame_robot_balanced_spinner)
                 {
-                    scores.setEndgameRobotBalanced(pos);
+                    Scores.setEndgameRobotBalanced(pos);
                     calcScore();
                 }
             }
@@ -707,11 +704,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.positiveIncrementPenaltiesMinor();
-                penaltiesMinorTxtView.setText(Integer.toString(scores.getNumMinorPenalties()));
+                Scores.positiveIncrementPenaltiesMinor();
+                penaltiesMinorTxtView.setText(Integer.toString(Scores.getNumMinorPenalties()));
                 calcScore();
 
-                if (scores.getNumMinorPenalties() > 0)
+                if (Scores.getNumMinorPenalties() > 0)
                 {
                     penaltiesMinorMinus.setEnabled(true);
                 }
@@ -723,11 +720,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.negativeIncrementPenaltiesMinor();
-                penaltiesMinorTxtView.setText(Integer.toString(scores.getNumMinorPenalties()));
+                Scores.negativeIncrementPenaltiesMinor();
+                penaltiesMinorTxtView.setText(Integer.toString(Scores.getNumMinorPenalties()));
                 calcScore();
 
-                if (scores.getNumMinorPenalties() < 1)
+                if (Scores.getNumMinorPenalties() < 1)
                 {
                     penaltiesMinorMinus.setEnabled(false);
                 }
@@ -744,11 +741,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.positiveIncrementPenaltiesMajor();
-                penaltiesMajorTxtView.setText(Integer.toString(scores.getNumMajorPenalties()));
+                Scores.positiveIncrementPenaltiesMajor();
+                penaltiesMajorTxtView.setText(Integer.toString(Scores.getNumMajorPenalties()));
                 calcScore();
 
-                if (scores.getNumMajorPenalties() > 0)
+                if (Scores.getNumMajorPenalties() > 0)
                 {
                     penaltiesMajorMinus.setEnabled(true);
                 }
@@ -760,11 +757,11 @@ public class MainActivity extends Activity
             @Override
             public void onClick(View view)
             {
-                scores.negativeIncrementPenaltiesMajor();
-                penaltiesMajorTxtView.setText(Integer.toString(scores.getNumMajorPenalties()));
+                Scores.negativeIncrementPenaltiesMajor();
+                penaltiesMajorTxtView.setText(Integer.toString(Scores.getNumMajorPenalties()));
                 calcScore();
 
-                if (scores.getNumMajorPenalties() < 1)
+                if (Scores.getNumMajorPenalties() < 1)
                 {
                     penaltiesMajorMinus.setEnabled(false);
                 }
@@ -810,7 +807,10 @@ public class MainActivity extends Activity
 
         else if (id == R.id.exportMenuItem)
         {
-            ExportScores.exportWithPermissionsWrapper(this, scores);
+            ExportScores.exportWithPermissionsWrapper(this);
+            /*Intent intent = new Intent(this, ExportActivity.class);
+            startActivity(intent);
+            return true;*/
         }
 
         else if (id == R.id.exitMenuItem)
@@ -843,7 +843,7 @@ public class MainActivity extends Activity
                     if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     {
                         //allowed
-                        ExportScores.exportWithPermissionsWrapper(this, scores);
+                        ExportScores.exportWithPermissionsWrapper(this);
                     }
 
                     else
@@ -900,25 +900,4 @@ public class MainActivity extends Activity
             alert11.show();
         }
     }
-
-    private void exportScoresComingSoon()
-    {
-        AlertDialog.Builder finishedDialog = new AlertDialog.Builder(MainActivity.this);
-        finishedDialog.
-                setTitle("Coming soon!")
-                .setMessage("Export functionality coming soon!")
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        //do things
-                    }
-                });
-        AlertDialog alert = finishedDialog.create();
-        alert.show();
-    }
-
-
-
 }

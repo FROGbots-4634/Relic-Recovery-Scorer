@@ -98,21 +98,21 @@ class Summary
         summaryMajorPenaltiesScoreValue =                (TextView) relativeLayout.findViewById(R.id.summary_item_penaltiesMajor_score_txtView);
     }
 
-    void updateSummary(Scores scores)
+    void updateSummary ()
     {
-        setVisibilityAndText(summaryJewelScore, summaryJewelScoreValue, CalculateScores.calculateAutonomousJewelScore(scores.getAutonomousJewelLevel()            ));
-        setVisibilityAndText(summaryPreloadedGlyphScore,                summaryPreloadedGlyphScoreValue,                CalculateScores.calculateAutonomousPreLoadedGlyphScore(       scores.getAutonomousPreloadedGlyphLevel()   ));
-        setVisibilityAndText(summaryAutoGlyphsScore,                    summaryAutoGlyphsScoreValue,                    CalculateScores.calculateAutonomousGlyphsScore(               scores.getAutonomousGlyphsScored()          ));
-        setVisibilityAndText(summaryAutoRobotParkedScore,               summaryAutoRobotParkedScoreValue,               CalculateScores.calculateAutonomousParkingScore(              scores.getParkingLevel()                    ));
-        setVisibilityAndText(summaryTeleopGlyphsScore,                  summaryTeleopGlyphsScoreValue,                  CalculateScores.calculateTeleopGlyphsScore(                   scores.getTeleOpGlyphsScored()              ));
-        setVisibilityAndText(summaryCryptoboxRowsCompleteBonusScore,    summaryCryptoboxRowsCompleteBonusScoreValue,    CalculateScores.calculateTeleopCryptoboxRowsCompletedScore(   scores.getTeleopCryptoboxRowsComplete()     ));
-        setVisibilityAndText(summaryCryptoboxColumnsCompleteBonusScore, summaryCryptoboxColumnsCompleteBonusScoreValue, CalculateScores.calculateTeleopCryptoboxColumnsCompleteScore( scores.getTeleopCryptoboxColumnsComplete()  ));
-        setVisibilityAndText(summaryCompletedCipherBonusScore,          summaryCompletedCipherBonusScoreValue,          CalculateScores.calculateTeleopCompletedCipherScore(          scores.getTeleopCipherLevel()               ));
-        setVisibilityAndText(summaryRelicPositionScore,                 summaryRelicPositionScoreValue,                 CalculateScores.calculateEndgameRelicPositionScore(           scores.getEndgameRelicPosition()            ));
-        setVisibilityAndText(summaryRelicOrientationScore,              summaryRelicOrientationScoreValue,              CalculateScores.calculateEndgameRelicOrientationScore(        scores.getEndgameRelicOrientation()         ));
-        setVisibilityAndText(summaryRobotBalancedScore,                 summaryRobotBalancedScoreValue,                 CalculateScores.calculateEndgameRobotBalancedScore(           scores.getEndgameRobotBalanced()            ));
-        setVisibilityAndText(summaryMinorPenaltiesScore,                summaryMinorPenaltiesScoreValue,                CalculateScores.calculatePenaltyMinorScore(                   scores.getNumMinorPenalties()               ));
-        setVisibilityAndText(summaryMajorPenaltiesScore,                summaryMajorPenaltiesScoreValue,                CalculateScores.calculatePenaltyMajorScore(                   scores.getNumMajorPenalties()               ));
+        setVisibilityAndText(summaryJewelScore, summaryJewelScoreValue, CalculateScores.calculateAutonomousJewelScore(Scores.getAutonomousJewelLevel()            ));
+        setVisibilityAndText(summaryPreloadedGlyphScore,                summaryPreloadedGlyphScoreValue,                CalculateScores.calculateAutonomousPreLoadedGlyphScore(       Scores.getAutonomousPreloadedGlyphLevel()   ));
+        setVisibilityAndText(summaryAutoGlyphsScore,                    summaryAutoGlyphsScoreValue,                    CalculateScores.calculateAutonomousGlyphsScore(               Scores.getAutonomousGlyphsScored()          ));
+        setVisibilityAndText(summaryAutoRobotParkedScore,               summaryAutoRobotParkedScoreValue,               CalculateScores.calculateAutonomousParkingScore(              Scores.getParkingLevel()                    ));
+        setVisibilityAndText(summaryTeleopGlyphsScore,                  summaryTeleopGlyphsScoreValue,                  CalculateScores.calculateTeleopGlyphsScore(                   Scores.getTeleOpGlyphsScored()              ));
+        setVisibilityAndText(summaryCryptoboxRowsCompleteBonusScore,    summaryCryptoboxRowsCompleteBonusScoreValue,    CalculateScores.calculateTeleopCryptoboxRowsCompletedScore(   Scores.getTeleopCryptoboxRowsComplete()     ));
+        setVisibilityAndText(summaryCryptoboxColumnsCompleteBonusScore, summaryCryptoboxColumnsCompleteBonusScoreValue, CalculateScores.calculateTeleopCryptoboxColumnsCompleteScore( Scores.getTeleopCryptoboxColumnsComplete()  ));
+        setVisibilityAndText(summaryCompletedCipherBonusScore,          summaryCompletedCipherBonusScoreValue,          CalculateScores.calculateTeleopCompletedCipherScore(          Scores.getTeleopCipherLevel()               ));
+        setVisibilityAndText(summaryRelicPositionScore,                 summaryRelicPositionScoreValue,                 CalculateScores.calculateEndgameRelicPositionScore(           Scores.getEndgameRelicPosition()            ));
+        setVisibilityAndText(summaryRelicOrientationScore,              summaryRelicOrientationScoreValue,              CalculateScores.calculateEndgameRelicOrientationScore(        Scores.getEndgameRelicOrientation()         ));
+        setVisibilityAndText(summaryRobotBalancedScore,                 summaryRobotBalancedScoreValue,                 CalculateScores.calculateEndgameRobotBalancedScore(           Scores.getEndgameRobotBalanced()            ));
+        setVisibilityAndText(summaryMinorPenaltiesScore,                summaryMinorPenaltiesScoreValue,                CalculateScores.calculatePenaltyMinorScore(                   Scores.getNumMinorPenalties()               ));
+        setVisibilityAndText(summaryMajorPenaltiesScore,                summaryMajorPenaltiesScoreValue,                CalculateScores.calculatePenaltyMajorScore(                   Scores.getNumMajorPenalties()               ));
         nothingToSee();
     }
 

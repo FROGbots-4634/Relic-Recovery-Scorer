@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="exportTypeOptions">
+        <item>Plaintext</item>
+        <item>CSV</item>
+        <item>Google Sheets (coming soon)</item>
+    </string-array>
+</resources>
