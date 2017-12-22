@@ -2,6 +2,7 @@ package net.frogbots.relicrecoveryscorecalculator.backend.export.csv;
 
 import com.opencsv.CSVReader;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
+import net.frogbots.relicrecoveryscorecalculator.ui.UiUtils;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -21,18 +22,34 @@ public class CsvAddExport
 
     public static void export (ExportBundle exportBundle) throws IOException
     {
+        /*
+         * Read in the file that we need to append to
+         */
         String[][] readArray = readCSV(exportBundle.fileForCsvAdd);
         int count = readArray.length;
 
+        /*
+         * Verify that it's a compatible file
+         */
         if(!verifyCompatibility(readArray[0]))
         {
-            throw new RuntimeException();
+            /*
+             * Well, it's not compatible :(
+             * Show the user a dialog and abort the export
+             */
+            UiUtils.showSimpleOkDialog(exportBundle.activity, "This CSV file is not compatible with this version of the app!");
         }
-
-        String[][] out = new String[count+1][CsvCommon.columns.length];
-        arrayCopy(readArray, out);
-        CsvCommon.writeScoresToRow(out, exportBundle.comment, exportBundle.match, count);
-        CsvCommon.saveToCSV(exportBundle.activity, exportBundle.fileForCsvAdd, out);
+        else
+        {
+            /*
+             * It is compatible!
+             * Continue with the export
+             */
+            String[][] out = new String[count+1][CsvCommon.columns.length];
+            arrayCopy(readArray, out);
+            CsvCommon.writeScoresToRow(out, exportBundle.comment, exportBundle.match, count);
+            CsvCommon.saveToCSV(exportBundle.activity, exportBundle.fileForCsvAdd, out);
+        }
     }
 
     private static void arrayCopy(String[][] aSource, String[][] aDestination)
@@ -45,6 +62,11 @@ public class CsvAddExport
 
     private static boolean verifyCompatibility(String[] arr)
     {
+        /*
+         * Verify that it has all of the columns inside
+         * CsvCommon.columns and doesn't have anything
+         * else...
+         */
         return Arrays.equals(arr, CsvCommon.columns);
     }
 }
