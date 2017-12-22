@@ -20,12 +20,11 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import net.frogbots.relicrecoveryscorecalculator.R;
-import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportScores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.Export;
 
 @SuppressLint("SetTextI18n")
 public class MainActivity extends Activity
@@ -832,7 +831,7 @@ public class MainActivity extends Activity
     {
         switch (requestCode)
         {
-            case ExportScores.REQUEST_EXTERNAL_STORAGE_PERMISSIONS:
+            case Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS:
                 if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 {
                     //denied
@@ -843,7 +842,7 @@ public class MainActivity extends Activity
                     if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     {
                         //allowed
-                        ExportScores.exportWithPermissionsWrapper(this);
+                        //Export.exportWithPermissionsWrapper(this);
                     }
 
                     else

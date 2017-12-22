@@ -86,8 +86,10 @@ public class ExportActivity extends Activity
                         e.printStackTrace();
                     }
                 }
-
-                Export.exportWithPermissionsWrapper(bundle);
+                else
+                {
+                    Export.exportWithPermissionsWrapper(bundle);
+                }
             }
         });
     }
@@ -124,7 +126,8 @@ public class ExportActivity extends Activity
             public void onClick (DialogInterface dialog, int which)
             {
                 //String strName = arrayAdapter.getItem(which).getName();
-                bundle.filename = arrayAdapter.getItem(which).getName();
+                bundle.fileForCsvAdd = arrayAdapter.getItem(which);
+                System.out.println("test" + bundle.fileForCsvAdd.getAbsolutePath());
                 Export.exportWithPermissionsWrapper(bundle);
             }
         });
