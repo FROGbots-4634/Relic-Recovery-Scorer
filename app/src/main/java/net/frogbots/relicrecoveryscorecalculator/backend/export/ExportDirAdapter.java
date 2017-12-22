@@ -17,8 +17,6 @@ import java.util.Comparator;
  */
 public class ExportDirAdapter extends ArrayAdapter<File>
 {
-    private int mPosition = -1;
-
     public ExportDirAdapter (Context context, String directory) throws IOException
     {
         super(context, R.layout.export_file_item, android.R.id.text1);
@@ -29,7 +27,7 @@ public class ExportDirAdapter extends ArrayAdapter<File>
             throw new IOException(String.format("unable to read %s", directory));
         }
 
-        // Sort the list of directories by name
+        // Sort the list of files by name
         Arrays.sort(files, new Comparator<File>()
         {
             @Override
@@ -39,8 +37,7 @@ public class ExportDirAdapter extends ArrayAdapter<File>
             }
         });
 
-        // Append all of the directories
-        //add(new File(".."));
+        // Append all of the CSV files
         for (File file : files)
         {
             if (!file.isDirectory())
@@ -59,28 +56,7 @@ public class ExportDirAdapter extends ArrayAdapter<File>
         View view = super.getView(position, convertView, parent);
         File file = getItem(position);
         ((ImageView) view.findViewById(android.R.id.icon)).setImageResource(R.drawable.ic_file);
-        //noinspection ConstantConditions
         ((TextView) view.findViewById(android.R.id.text1)).setText(file.getName());
-        /*view.setBackgroundColor(
-                position == mPosition ?
-                        ContextCompat.getColor(getContext(), R.color.colorAccent) :
-                        Color.TRANSPARENT
-        );*/
         return view;
-    }
-
-    void setSelection (int position)
-    {
-        mPosition = position;
-    }
-
-    /**
-     * Obtain the currently selected path
-     */
-    String getSelection ()
-    {
-        //noinspection ConstantConditions
-        return 0 <= mPosition && mPosition < getCount() ?
-                getItem(mPosition).getAbsolutePath() : null;
     }
 }
