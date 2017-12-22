@@ -835,7 +835,7 @@ public class MainActivity extends Activity
                 if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 {
                     //denied
-                    Utils.showSimpleOkDialog(MainActivity.this, "In order for the exported file to be written to disk, you need to grant the extenal storage permission");
+                    UiUtils.showSimpleOkDialog(MainActivity.this, "In order for the exported file to be written to disk, you need to grant the extenal storage permission");
                 }
                 else
                 {
@@ -849,7 +849,7 @@ public class MainActivity extends Activity
                     {
                         //set to never ask again
                         //do something here.
-                        Utils.showSimpleOkDialog(MainActivity.this, "You have permanently denied the external storage permission. In order to use the Export Scores feature, you need to go to your system settings and grant the permission.");
+                        UiUtils.showSimpleOkDialog(MainActivity.this, "You have permanently denied the external storage permission. In order to use the Export Scores feature, you need to go to your system settings and grant the permission.");
                     }
                 }
                 break;

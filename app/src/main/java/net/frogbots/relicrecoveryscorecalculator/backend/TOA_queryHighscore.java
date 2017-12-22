@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.text.Html;
+
+import net.frogbots.relicrecoveryscorecalculator.ui.UiUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +58,7 @@ public class TOA_queryHighscore
                     }
                     else
                     {
-                        Utils.showNoInternetDialog(activity);
+                        UiUtils.showNoInternetDialog(activity);
                         dismissProgressDialog(activity);
                     }
                 }
