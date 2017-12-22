@@ -44,6 +44,8 @@ public class ExportActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
 
+        setupSdcardDir();
+
         commentTxtView = (EditText) findViewById(R.id.commentTextView);
         matchTxtView = (EditText) findViewById(R.id.matchTextView);
         filenameEditText = (EditText) findViewById(R.id.filenameEditTet);
@@ -109,7 +111,7 @@ public class ExportActivity extends Activity
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Select a file to add to:");
 
-        final ArrayAdapter<File> arrayAdapter = new ExportDirAdapter(this, "/sdcard/RelicRecoveryScorer");
+        final ArrayAdapter<File> arrayAdapter = new ExportDirAdapter(this, "/sdcard/RelicRecoveryScorer/");
 
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener()
         {
@@ -132,6 +134,16 @@ public class ExportActivity extends Activity
             }
         });
         builderSingle.show();
+    }
+
+    private void setupSdcardDir()
+    {
+        File dir = new File("/sdcard/RelicRecoveryScorer/");
+
+        if(!dir.exists())
+        {
+            dir.mkdir();
+        }
     }
 
     private void setupTypeSpinner ()

@@ -2,7 +2,6 @@ package net.frogbots.relicrecoveryscorecalculator.backend.export;
 
 import android.app.Activity;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
-
 import java.io.File;
 
 public class ExportBundle
