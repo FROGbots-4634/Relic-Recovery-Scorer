@@ -5,6 +5,7 @@ import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class CsvAddExport
@@ -22,6 +23,12 @@ public class CsvAddExport
     {
         String[][] readArray = readCSV(exportBundle.fileForCsvAdd);
         int count = readArray.length;
+
+        if(!verifyCompatibility(readArray[0]))
+        {
+            throw new RuntimeException();
+        }
+
         String[][] out = new String[count+1][17];
         arrayCopy(readArray, out);
         CsvCommon.writeScoresToRow(out, exportBundle.comment, exportBundle.match, count);
@@ -33,5 +40,10 @@ public class CsvAddExport
         for (int i = 0; i < aSource.length; i++) {
             System.arraycopy(aSource[i], 0, aDestination[i], 0, aSource[i].length);
         }
+    }
+
+    private static boolean verifyCompatibility(String[] arr)
+    {
+        return Arrays.equals(arr, CsvCommon.columns);
     }
 }

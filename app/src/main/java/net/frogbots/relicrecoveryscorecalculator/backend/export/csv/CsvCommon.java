@@ -17,6 +17,26 @@ import java.util.Calendar;
 
 class CsvCommon
 {
+    static final String[] columns = {
+            "Time",
+            "Match",
+            "Comment",
+            "Jewel",
+            "Pre-loaded glyph",
+            "[Auto] glyphs scored",
+            "Autonomous parking",
+            "[Tele-Op] glyphs scored",
+            "Cryptobox rows complete",
+            "Cryptobox columns complete",
+            "Cipher completed",
+            "Relic position",
+            "Relic upright",
+            "Robot balanced",
+            "Minor penalties",
+            "Major penalties",
+            "TOTAL SCORE"
+    };
+
     static void saveToCSV (Context context, File file, String[][] array) throws IOException
     {
         CSVWriter writer = new CSVWriter(new FileWriter(file));
