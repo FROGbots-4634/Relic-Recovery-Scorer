@@ -9,14 +9,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.Export;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportDirAdapter;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportType;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -24,6 +25,11 @@ public class ExportActivity extends Activity
 {
     Spinner typeSpinner;
     ArrayAdapter<CharSequence> typeAdapter;
+
+    EditText commentTxtView;
+    EditText matchTxtView;
+    EditText filenameEditText;
+    TextView filenameHeader;
 
     ProgressDialog progressDialog;
     Button exportButton;
@@ -37,6 +43,10 @@ public class ExportActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
 
+        commentTxtView = (EditText) findViewById(R.id.commentTextView);
+        matchTxtView = (EditText) findViewById(R.id.matchTextView);
+        filenameEditText = (EditText) findViewById(R.id.filenameEditTet);
+        filenameHeader = (TextView) findViewById(R.id.filenameHeader);
         exportButton = (Button) findViewById(R.id.exportButton);
         typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
         setupTypeSpinner();
@@ -60,10 +70,10 @@ public class ExportActivity extends Activity
                 ExportBundle bundle = new ExportBundle();
                 bundle.activity = ExportActivity.this;
                 bundle.exportType = exportType;
-                bundle.match = "Q-37";
-                bundle.comment = "8619 died from ESD";
+                bundle.match = matchTxtView.getText().toString();
+                bundle.comment = commentTxtView.getText().toString();
                 bundle.scores = scores;
-                bundle.filename = "hellu";
+                bundle.filename = filenameEditText.getText().toString();
 
                 Export.exportWithPermissionsWrapper(bundle);
             }
@@ -132,14 +142,22 @@ public class ExportActivity extends Activity
             {
                 if(pos == 0) //Plaintext
                 {
+                    handleFilenameVisibility(false);
                     exportType = ExportType.PLAINTEXT;
                 }
                 else if(pos == 1) //CSV
                 {
+                    handleFilenameVisibility(false);
+                    exportType = ExportType.CSVnew;
+                }
+                else if(pos == 2) //CSV add to existing
+                {
+                    handleFilenameVisibility(true);
                     exportType = ExportType.CSV;
                 }
-                else if(pos == 2) //Google sheets
+                else if(pos == 3) //Google sheets
                 {
+                    handleFilenameVisibility(false);
                     typeSpinner.setSelection(1);
                     exportType = ExportType.GOOGLE_SHEETS;
                 }
@@ -151,5 +169,19 @@ public class ExportActivity extends Activity
 
             }
         });
+    }
+
+    private void handleFilenameVisibility(boolean b)
+    {
+        if(b)
+        {
+            filenameHeader.setVisibility(View.GONE);
+            filenameEditText.setVisibility(View.GONE);
+        }
+        else
+        {
+            filenameHeader.setVisibility(View.VISIBLE);
+            filenameEditText.setVisibility(View.VISIBLE);
+        }
     }
 }

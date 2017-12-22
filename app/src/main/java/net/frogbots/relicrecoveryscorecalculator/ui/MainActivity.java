@@ -807,10 +807,10 @@ public class MainActivity extends Activity
 
         else if (id == R.id.exportMenuItem)
         {
-            ExportScores.exportWithPermissionsWrapper(this);
-            /*Intent intent = new Intent(this, ExportActivity.class);
+            //ExportScores.exportWithPermissionsWrapper(this);
+            Intent intent = new Intent(this, ExportActivity.class);
             startActivity(intent);
-            return true;*/
+            return true;
         }
 
         else if (id == R.id.exitMenuItem)

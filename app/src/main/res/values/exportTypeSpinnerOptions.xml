@@ -2,7 +2,8 @@
 <resources>
     <string-array name="exportTypeOptions">
         <item>Plaintext</item>
-        <item>CSV</item>
+        <item>CSV (new)</item>
+        <item>CSV (add to existing)</item>
         <item>Google Sheets (coming soon)</item>
     </string-array>
 </resources>

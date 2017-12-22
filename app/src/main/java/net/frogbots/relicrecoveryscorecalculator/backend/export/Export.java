@@ -4,6 +4,10 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvNewExport;
+
+import java.io.IOException;
+
 public class Export
 {
     public static final int REQUEST_EXTERNAL_STORAGE_PERMISSIONS = 123;
@@ -44,16 +48,16 @@ public class Export
             case GOOGLE_SHEETS:
                 break;
 
-            /*case CSVnew:
+            case CSVnew:
                 try
                 {
-                    saveNewEntry(context, exportFile, comment, scores);
+                    CsvNewExport.exportCSV(exportBundle);
                 }
                 catch (IOException e)
                 {
                     e.printStackTrace();
                 }
-                break;*/
+                break;
         }
     }
 }

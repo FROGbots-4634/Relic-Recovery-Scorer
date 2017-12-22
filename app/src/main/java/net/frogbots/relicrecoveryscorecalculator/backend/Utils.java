@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 
+import java.io.File;
 import java.net.InetAddress;
 
 public class Utils
@@ -80,5 +81,49 @@ public class Utils
                 alert11.show();
             }
         });
+    }
+
+    public static String jewelForExport(int i)
+    {
+        String result = null;
+
+        switch (i)
+        {
+            case 0:
+                result =  "Null";
+                break;
+
+            case 1:
+                result = "Opponent's jewel removed";
+                break;
+
+            case 2:
+                result = "Your jewel removed";
+                break;
+        }
+
+        return result;
+    }
+
+    public static String glyphForExport(int i)
+    {
+        String result = null;
+
+        switch (i)
+        {
+            case 0:
+                result = "Null";
+                break;
+
+            case 1:
+                result = "Glyph scored";
+                break;
+
+            case 2:
+                result = "Glyph scored in column indicated by key";
+                break;
+        }
+
+        return result;
     }
 }
