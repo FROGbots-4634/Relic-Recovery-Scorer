@@ -3,7 +3,7 @@ package net.frogbots.relicrecoveryscorecalculator.backend.export;
 public enum ExportType
 {
     PLAINTEXT,
-    CSV,
+    CSV_ADD,
     GOOGLE_SHEETS,
-    CSVnew
+    CSV_NEW
 }

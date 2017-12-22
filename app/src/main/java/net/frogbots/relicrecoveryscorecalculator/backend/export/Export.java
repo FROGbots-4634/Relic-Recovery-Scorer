@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvAddExport;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvNewExport;
 
 import java.io.IOException;
@@ -34,21 +35,21 @@ public class Export
                 PlaintextExport.export(exportBundle);
                 break;
 
-            /*case CSV:
+            case CSV_ADD:
                 try
                 {
-                    exportCSV(context, exportFile, comment, scores);
+                    CsvAddExport.export(exportBundle);
                 }
                 catch (IOException e)
                 {
                     e.printStackTrace();
                 }
-                break;*/
+                break;
 
             case GOOGLE_SHEETS:
                 break;
 
-            case CSVnew:
+            case CSV_NEW:
                 try
                 {
                     CsvNewExport.exportCSV(exportBundle);

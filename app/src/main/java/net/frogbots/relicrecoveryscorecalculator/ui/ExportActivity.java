@@ -36,6 +36,7 @@ public class ExportActivity extends Activity
 
     ExportType exportType;
     Scores scores;
+    ExportBundle bundle = new ExportBundle();
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -67,13 +68,24 @@ public class ExportActivity extends Activity
             @Override
             public void onClick (View view)
             {
-                ExportBundle bundle = new ExportBundle();
                 bundle.activity = ExportActivity.this;
                 bundle.exportType = exportType;
                 bundle.match = matchTxtView.getText().toString();
                 bundle.comment = commentTxtView.getText().toString();
                 bundle.scores = scores;
                 bundle.filename = filenameEditText.getText().toString();
+
+                if (exportType == ExportType.CSV_ADD)
+                {
+                    try
+                    {
+                        alertDialogTest();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
 
                 Export.exportWithPermissionsWrapper(bundle);
             }
@@ -90,41 +102,36 @@ public class ExportActivity extends Activity
         return true;
     }
 
-    private void alertDialogTest() throws IOException
+    private void alertDialogTest () throws IOException
     {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Select a file to add to:");
 
         final ArrayAdapter<File> arrayAdapter = new ExportDirAdapter(this, "/sdcard/RelicRecoveryScorer");
 
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick (DialogInterface dialog, int which)
+            {
                 dialog.dismiss();
             }
         });
 
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialog, int which)
+            public void onClick (DialogInterface dialog, int which)
             {
-                String strName = arrayAdapter.getItem(which).getName();
-                AlertDialog.Builder builderInner = new AlertDialog.Builder(ExportActivity.this);
-                builderInner.setMessage(strName);
-                builderInner.setTitle("Your Selected Item is");
-                builderInner.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builderInner.show();
+                //String strName = arrayAdapter.getItem(which).getName();
+                bundle.filename = arrayAdapter.getItem(which).getName();
+                Export.exportWithPermissionsWrapper(bundle);
             }
         });
         builderSingle.show();
     }
 
-    private void setupTypeSpinner()
+    private void setupTypeSpinner ()
     {
         // Create an ArrayAdapter using the string array and a default spinner layout
         typeAdapter = ArrayAdapter.createFromResource(this, R.array.exportTypeOptions, android.R.layout.simple_spinner_item);
@@ -138,24 +145,24 @@ public class ExportActivity extends Activity
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
+            public void onItemSelected (AdapterView<?> adapterView, View view, int pos, long l)
             {
-                if(pos == 0) //Plaintext
+                if (pos == 0) //Plaintext
                 {
                     handleFilenameVisibility(false);
                     exportType = ExportType.PLAINTEXT;
                 }
-                else if(pos == 1) //CSV
+                else if (pos == 1) //CSV_ADD
                 {
                     handleFilenameVisibility(false);
-                    exportType = ExportType.CSVnew;
+                    exportType = ExportType.CSV_NEW;
                 }
-                else if(pos == 2) //CSV add to existing
+                else if (pos == 2) //CSV_ADD add to existing
                 {
                     handleFilenameVisibility(true);
-                    exportType = ExportType.CSV;
+                    exportType = ExportType.CSV_ADD;
                 }
-                else if(pos == 3) //Google sheets
+                else if (pos == 3) //Google sheets
                 {
                     handleFilenameVisibility(false);
                     typeSpinner.setSelection(1);
@@ -164,16 +171,16 @@ public class ExportActivity extends Activity
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
+            public void onNothingSelected (AdapterView<?> adapterView)
             {
 
             }
         });
     }
 
-    private void handleFilenameVisibility(boolean b)
+    private void handleFilenameVisibility (boolean b)
     {
-        if(b)
+        if (b)
         {
             filenameHeader.setVisibility(View.GONE);
             filenameEditText.setVisibility(View.GONE);
