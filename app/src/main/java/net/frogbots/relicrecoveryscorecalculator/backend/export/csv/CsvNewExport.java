@@ -9,9 +9,9 @@ public class CsvNewExport
     public static void exportCSV (ExportBundle exportBundle) throws IOException
     {
         File file = new File("/sdcard/RelicRecoveryScorer/" + exportBundle.filename + ".csv");
-        String array[][] = new String[2][17];
+        String array[][] = new String[2][CsvCommon.columns.length];
 
-        System.arraycopy(CsvCommon.columns, 0, array[0], 0, 17);
+        System.arraycopy(CsvCommon.columns, 0, array[0], 0, CsvCommon.columns.length);
 
         CsvCommon.writeScoresToRow(array, exportBundle.comment, exportBundle.match, 1);
         CsvCommon.saveToCSV(exportBundle.activity, file, array);

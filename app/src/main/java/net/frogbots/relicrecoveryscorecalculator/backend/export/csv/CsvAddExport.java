@@ -29,7 +29,7 @@ public class CsvAddExport
             throw new RuntimeException();
         }
 
-        String[][] out = new String[count+1][17];
+        String[][] out = new String[count+1][CsvCommon.columns.length];
         arrayCopy(readArray, out);
         CsvCommon.writeScoresToRow(out, exportBundle.comment, exportBundle.match, count);
         CsvCommon.saveToCSV(exportBundle.activity, exportBundle.fileForCsvAdd, out);
@@ -37,7 +37,8 @@ public class CsvAddExport
 
     private static void arrayCopy(String[][] aSource, String[][] aDestination)
     {
-        for (int i = 0; i < aSource.length; i++) {
+        for (int i = 0; i < aSource.length; i++)
+        {
             System.arraycopy(aSource[i], 0, aDestination[i], 0, aSource[i].length);
         }
     }
