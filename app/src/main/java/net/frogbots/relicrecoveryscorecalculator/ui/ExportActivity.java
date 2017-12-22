@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
+import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.Export;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportDirAdapter;
@@ -111,7 +112,7 @@ public class ExportActivity extends Activity
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Select a file to add to:");
 
-        final ArrayAdapter<File> arrayAdapter = new ExportDirAdapter(this, "/sdcard/RelicRecoveryScorer/");
+        final ArrayAdapter<File> arrayAdapter = new ExportDirAdapter(this, Utils.getExportDirPath());
 
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener()
         {
@@ -138,7 +139,7 @@ public class ExportActivity extends Activity
 
     private void setupSdcardDir()
     {
-        File dir = new File("/sdcard/RelicRecoveryScorer/");
+        File dir = new File(Utils.getExportDirPath());
 
         if(!dir.exists())
         {

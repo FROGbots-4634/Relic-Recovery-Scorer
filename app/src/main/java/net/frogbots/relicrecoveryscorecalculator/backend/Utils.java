@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
+import android.os.Environment;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -125,5 +126,10 @@ public class Utils
         }
 
         return result;
+    }
+
+    public static String getExportDirPath()
+    {
+        return Environment.getExternalStorageDirectory() + "/RelicRecoveryScorer/";
     }
 }

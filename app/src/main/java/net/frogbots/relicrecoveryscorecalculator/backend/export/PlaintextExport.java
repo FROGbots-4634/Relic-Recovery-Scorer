@@ -14,13 +14,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class PlaintextExport
+class PlaintextExport
 {
     public static void export(ExportBundle exportBundle)
     {
         try
         {
-            File file = new File("/sdcard/RelicRecoveryScorer/" + exportBundle.filename + ".txt");
+            File file = new File(Utils.getExportDirPath() + exportBundle.filename + ".txt");
 
             /*
              * Create the output stream
