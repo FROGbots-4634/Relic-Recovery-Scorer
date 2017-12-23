@@ -37,7 +37,7 @@ public class CsvAddExport
              * Well, it's not compatible :(
              * Show the user a dialog and abort the export
              */
-            UiUtils.showSimpleOkDialog(exportBundle.activity, "This CSV file is not compatible with this version of the app!");
+            UiUtils.showSimpleOkDialogWithTitle(exportBundle.activity, "Ruh-roh!", "This CSV file is not compatible with this version of the app!");
         }
         else
         {

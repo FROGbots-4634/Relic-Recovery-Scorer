@@ -27,7 +27,7 @@ public class UiUtils
         alert11.show();
     }
 
-    static void showSimpleOkDialogWithTitle(final Activity activity, String title, String msg)
+    public static void showSimpleOkDialogWithTitle (final Activity activity, String title, String msg)
     {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
         builder1.setMessage(msg);

@@ -5,15 +5,19 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 
 import net.frogbots.relicrecoveryscorecalculator.ui.UiUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -32,7 +36,7 @@ public class TOA_queryHighscore
     private static final String RED_PENALTY_KEY = "red_penalty";
     private static final String MATCH_STRING_KEY = "match_key";
 
-    public static int query(final Activity activity)
+    public static int query (final Activity activity)
     {
         toaProgressDialog = new ProgressDialog(activity);
         toaProgressDialog.setTitle("Querying TOA...");
@@ -48,7 +52,7 @@ public class TOA_queryHighscore
                 try
                 {
                     toaProgressDialog.setMessage("Checking internet connectivity...");
-                    if(Utils.areWeOnline(activity))
+                    if (Utils.areWeOnline(activity))
                     {
                         //Thread.sleep(1000);
 
@@ -80,34 +84,35 @@ public class TOA_queryHighscore
         return 0;
     }
 
-    private static void showResult(final Activity activity, final String msg)
+    private static void showResult (final Activity activity, final String msg)
     {
         activity.runOnUiThread(new Runnable()
         {
             @Override
             public void run ()
             {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                builder1.setTitle("Highscore");
-                builder1.setMessage(msg);
-                builder1.setCancelable(false);
-                builder1.setNegativeButton(
-                        "Ok",
-                        new DialogInterface.OnClickListener()
-                        {
-                            public void onClick(DialogInterface dialog, int id)
-                            {
-                                dialog.cancel();
-                            }
-                        });
+                AlertDialog dialog = new AlertDialog.Builder(activity)
+                        .setTitle("Highscore")
+                        .setMessage(Html.fromHtml(msg))
+                        .setCancelable(false)
+                        .setNegativeButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick (DialogInterface dialog, int id)
+                                    {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .create();
 
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
+                dialog.show();
+                ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
             }
         });
     }
 
-    private static String getJsonFromToa(String url) throws IOException
+    private static String getJsonFromToa (String url) throws IOException
     {
         OkHttpClient client = new OkHttpClient();
 
@@ -121,7 +126,7 @@ public class TOA_queryHighscore
         return response.body().string();
     }
 
-    private static void dismissProgressDialog(Activity activity)
+    private static void dismissProgressDialog (Activity activity)
     {
         activity.runOnUiThread(new Runnable()
         {
@@ -133,11 +138,11 @@ public class TOA_queryHighscore
         });
     }
 
-    private static String formatHighscoreMessage(Highscore highscore)
+    private static String formatHighscoreMessage (Highscore highscore)
     {
-        return "According to TOA data, the current high score is "+ highscore.score
+        return "According to TOA data, the current high score is " + highscore.score
                 + " and was set by the " + highscore.alliance
-                + " alliance in match " + highscore.matchKey;
+                + " alliance in match " + "<a href='https://theorangealliance.org/matches/" + highscore.matchKey + "'>" + highscore.matchKey + "</a>";
     }
 
     private static Highscore getHighscore (Activity activity, final ProgressDialog toaProgressDialog) throws JSONException, IOException
@@ -170,9 +175,9 @@ public class TOA_queryHighscore
         });
         Highscore highWithPenaltyAfterSubtraction = downloadAndParseHighscore(TOA_HIGHSCORE_WITH_PENALTY_URL);
 
-        if(noPenaltyElims.score > noPenaltyQuals.score)
+        if (noPenaltyElims.score > noPenaltyQuals.score)
         {
-            if(highWithPenaltyAfterSubtraction.score > noPenaltyElims.score)
+            if (highWithPenaltyAfterSubtraction.score > noPenaltyElims.score)
             {
                 return highWithPenaltyAfterSubtraction;
             }
@@ -183,7 +188,7 @@ public class TOA_queryHighscore
         }
         else // noPenaltyQuals.score > noPenaltyElims.score
         {
-            if(highWithPenaltyAfterSubtraction.score > noPenaltyQuals.score)
+            if (highWithPenaltyAfterSubtraction.score > noPenaltyQuals.score)
             {
                 return highWithPenaltyAfterSubtraction;
             }
@@ -194,7 +199,7 @@ public class TOA_queryHighscore
         }
     }
 
-    private static Highscore downloadAndParseHighscore(String url) throws JSONException, IOException
+    private static Highscore downloadAndParseHighscore (String url) throws JSONException, IOException
     {
         String data = getJsonFromToa(url);
         JSONArray jsonArray = new JSONArray(data);
@@ -211,7 +216,7 @@ public class TOA_queryHighscore
         System.out.println("Red: " + blueScore);
         System.out.println("Blue: " + redScore);
 
-        if(url.equals(TOA_HIGHSCORE_WITH_PENALTY_URL))
+        if (url.equals(TOA_HIGHSCORE_WITH_PENALTY_URL))
         {
             int bluePenalty;
             int blueScoreMinusPenalty;
@@ -228,7 +233,7 @@ public class TOA_queryHighscore
             redScoreMinusPenalty = redScore - redPenalty;
             blueScoreMinusPenalty = blueScore - bluePenalty;
 
-            if(redScoreMinusPenalty > blueScoreMinusPenalty)
+            if (redScoreMinusPenalty > blueScoreMinusPenalty)
             {
                 return new Highscore(matchKey, "red", redScoreMinusPenalty);
             }
@@ -239,7 +244,7 @@ public class TOA_queryHighscore
         }
         else
         {
-            if(blueScore > redScore)
+            if (blueScore > redScore)
             {
                 return new Highscore(matchKey, "blue", blueScore);
             }
@@ -250,7 +255,7 @@ public class TOA_queryHighscore
         }
     }
 
-    private static void showSomethingWentWrongDialog(final Activity activity, final String err)
+    private static void showSomethingWentWrongDialog (final Activity activity, final String err)
     {
         final String msg = "<b><font color='red'>Something went wrong :(</font></b><br><br>" + err;
 
@@ -267,7 +272,7 @@ public class TOA_queryHighscore
                         "Ok",
                         new DialogInterface.OnClickListener()
                         {
-                            public void onClick(DialogInterface dialog, int id)
+                            public void onClick (DialogInterface dialog, int id)
                             {
                                 dialog.cancel();
                             }
