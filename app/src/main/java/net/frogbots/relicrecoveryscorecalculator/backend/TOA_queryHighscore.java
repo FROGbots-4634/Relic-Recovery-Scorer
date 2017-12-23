@@ -140,7 +140,7 @@ public class TOA_queryHighscore
 
     private static String formatHighscoreMessage (Highscore highscore)
     {
-        return "According to TOA data, the current high score is " + highscore.score
+        return "According to The Orange Alliance, the current high score is " + highscore.score
                 + " and was set by the " + highscore.alliance
                 + " alliance in match " + "<a href='https://theorangealliance.org/matches/" + highscore.matchKey + "'>" + highscore.matchKey + "</a>";
     }
