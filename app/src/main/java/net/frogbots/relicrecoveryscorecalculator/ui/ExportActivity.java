@@ -21,6 +21,7 @@ import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportDirAdapter;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportType;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvNotCompatibleException;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.FileAlreadyExistsException;
 
 import java.io.File;
 import java.io.IOException;
@@ -151,6 +152,11 @@ public class ExportActivity extends Activity
         catch (CsvNotCompatibleException e)
         {
             UiUtils.showSimpleOkDialogWithTitle(this, "Ruh-roh!", "This CSV file is not compatible with this version of the app!");
+            e.printStackTrace();
+        }
+        catch (FileAlreadyExistsException e)
+        {
+            UiUtils.showSimpleOkDialogWithTitle(this, "File exists!", "The file you requested to export to already exists!");
             e.printStackTrace();
         }
     }

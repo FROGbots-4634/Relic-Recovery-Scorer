@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.widget.Toast;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.FileAlreadyExistsException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,9 +18,14 @@ import java.util.Calendar;
 
 class PlaintextExport
 {
-    public static String export(ExportBundle exportBundle) throws IOException
+    public static String export(ExportBundle exportBundle) throws IOException, FileAlreadyExistsException
     {
         File file = new File(Utils.getExportDirPath() + exportBundle.filename + ".txt");
+
+        if(file.exists())
+        {
+            throw new FileAlreadyExistsException();
+        }
 
         /*
          * Create the output stream
