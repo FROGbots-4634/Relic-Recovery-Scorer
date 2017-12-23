@@ -23,7 +23,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/header_rounded_corner_autonomous"
             android:gravity="center"
-            android:text="Number of Glyphs scored in Cryptobox\n(Does NOT inlcude pre-loaded from above)"
+            android:text="Extra autonomous Glyphs scored"
             android:textSize="@dimen/cardHeadingTextSize" />
 
         <RelativeLayout
