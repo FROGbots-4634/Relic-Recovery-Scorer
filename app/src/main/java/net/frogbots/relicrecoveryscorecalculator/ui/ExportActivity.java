@@ -252,11 +252,13 @@ public class ExportActivity extends Activity
         {
             filenameHeader.setVisibility(View.GONE);
             filenameEditText.setVisibility(View.GONE);
+            exportButton.setText("Select file to append to");
         }
         else
         {
             filenameHeader.setVisibility(View.VISIBLE);
             filenameEditText.setVisibility(View.VISIBLE);
+            exportButton.setText("Export");
         }
     }
 }
