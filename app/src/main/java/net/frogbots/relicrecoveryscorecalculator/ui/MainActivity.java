@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,8 +26,6 @@ import android.widget.TextView;
 import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
-import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
-import net.frogbots.relicrecoveryscorecalculator.backend.export.Export;
 
 import static net.frogbots.relicrecoveryscorecalculator.backend.export.Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
 
@@ -892,16 +892,19 @@ public class MainActivity extends Activity
         /*
          * Check if it's the first run
          */
-        if(preferences.getBoolean("isFirstRun", true))
+        if(preferences.getBoolean("isFirstRun_b", true))
         {
             /*
              * Yup, it's the first run; build an alert dialog
              */
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-            builder1.setTitle("Hi there!");
-            builder1.setMessage("Thanks for downloading our app! We hope you like it!");
-            builder1.setCancelable(false);
-            builder1.setNegativeButton(
+
+            String msg = "This app is now open source!<br><br><a href='https://github.com/FROGbots-4634/Relic-Recovery-Scorer'>Check out the repository on GitHub!</a>";
+
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setTitle("Hi there!")
+                    .setMessage(Html.fromHtml(msg))
+                    .setCancelable(false)
+                    .setNegativeButton(
                     "Ok",
                     new DialogInterface.OnClickListener()
                     {
@@ -913,12 +916,12 @@ public class MainActivity extends Activity
                              * Now that the user has seen the dialog, set the isFirstRun boolean
                              * to false so that it won't be shown again
                              */
-                            editor.putBoolean("isFirstRun", false).apply();
+                            editor.putBoolean("isFirstRun_b", false).apply();
                         }
-                    });
+                    }).create();
 
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
+            dialog.show();
+            ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
         }
     }
 }
