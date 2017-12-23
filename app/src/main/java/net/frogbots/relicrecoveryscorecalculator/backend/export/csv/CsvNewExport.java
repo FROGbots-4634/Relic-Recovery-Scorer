@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CsvNewExport
 {
-    public static void exportCSV (ExportBundle exportBundle) throws IOException
+    public static String exportCSV (ExportBundle exportBundle) throws IOException
     {
         File file = new File(Utils.getExportDirPath() + exportBundle.filename + ".csv");
         String array[][] = new String[2][CsvCommon.columns.length];
@@ -16,5 +16,7 @@ public class CsvNewExport
 
         CsvCommon.writeScoresToRow(array, exportBundle.comment, exportBundle.match, 1);
         CsvCommon.saveToCSV(exportBundle.activity, file, array);
+
+        return file.getAbsolutePath();
     }
 }

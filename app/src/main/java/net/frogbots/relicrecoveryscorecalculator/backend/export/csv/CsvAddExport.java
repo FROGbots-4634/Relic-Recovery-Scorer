@@ -20,7 +20,7 @@ public class CsvAddExport
         return dataArr;
     }
 
-    public static void export (ExportBundle exportBundle) throws IOException
+    public static String export (ExportBundle exportBundle) throws IOException, CsvNotCompatibleException
     {
         /*
          * Read in the file that we need to append to
@@ -37,7 +37,7 @@ public class CsvAddExport
              * Well, it's not compatible :(
              * Show the user a dialog and abort the export
              */
-            UiUtils.showSimpleOkDialogWithTitle(exportBundle.activity, "Ruh-roh!", "This CSV file is not compatible with this version of the app!");
+            throw new CsvNotCompatibleException();
         }
         else
         {
@@ -50,6 +50,7 @@ public class CsvAddExport
             CsvCommon.writeScoresToRow(out, exportBundle.comment, exportBundle.match, count);
             CsvCommon.saveToCSV(exportBundle.activity, exportBundle.fileForCsvAdd, out);
         }
+        return exportBundle.fileForCsvAdd.getAbsolutePath();
     }
 
     private static void arrayCopy(String[][] aSource, String[][] aDestination)

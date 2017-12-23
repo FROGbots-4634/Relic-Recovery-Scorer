@@ -42,24 +42,6 @@ class CsvCommon
         CSVWriter writer = new CSVWriter(new FileWriter(file));
         writer.writeAll(Arrays.asList(array));
         writer.close();
-
-        /*
-         * Show the user an alert letting them know it was exported
-         */
-        AlertDialog.Builder finishedDialog = new AlertDialog.Builder(context);
-        finishedDialog.
-                setTitle("File exported!")
-                .setMessage("The current Scores have been exported to:\n\n" + file.getAbsolutePath())
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener()
-                {
-                    public void onClick(DialogInterface dialog, int id)
-                    {
-                        //do things
-                    }
-                });
-        AlertDialog alert = finishedDialog.create();
-        alert.show();
     }
 
     static void writeScoresToRow (String[][] array, String comment, String match, int rowNumber)

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,8 @@ import net.frogbots.relicrecoveryscorecalculator.backend.export.Export;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportDirAdapter;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportType;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvNotCompatibleException;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -91,7 +94,7 @@ public class ExportActivity extends Activity
                 }
                 else
                 {
-                    Export.doExport(bundle);
+                    handleExportAndErrors();
                 }
             }
         });
@@ -105,6 +108,51 @@ public class ExportActivity extends Activity
     {
         finish();
         return true;
+    }
+
+    private void handleExportAndErrors()
+    {
+        try
+        {
+            String resultPath = Export.doExport(bundle);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle("File exported!")
+                    .setMessage("The current Scores have been exported to:\n\n" + resultPath)
+                    .setNegativeButton("Ok", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick (DialogInterface dialogInterface, int i)
+                        {
+                            finish();
+                        }
+                    })
+                    /*.setPositiveButton("Share", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick (DialogInterface dialogInterface, int i)
+                        {
+                            if(exportType == ExportType.PLAINTEXT)
+                            {
+                                String shareBody = "Here is the share content body";
+                                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                sharingIntent.setType("text/csv");
+                                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                                startActivity(sharingIntent);
+                            }
+                        }
+                    })*/;
+            builder.show();
+        }
+        catch (IOException e)
+        {
+            UiUtils.showSimpleOkDialogWithTitle(this, "Ruh-roh!", "Export failed!");
+            e.printStackTrace();
+        }
+        catch (CsvNotCompatibleException e)
+        {
+            UiUtils.showSimpleOkDialogWithTitle(this, "Ruh-roh!", "This CSV file is not compatible with this version of the app!");
+            e.printStackTrace();
+        }
     }
 
     private void showCsvAppendFileChooserDialog () throws IOException
@@ -129,7 +177,7 @@ public class ExportActivity extends Activity
             public void onClick (DialogInterface dialog, int which)
             {
                 bundle.fileForCsvAdd = arrayAdapter.getItem(which);
-                Export.doExport(bundle);
+                handleExportAndErrors();
             }
         });
         builderSingle.show();
