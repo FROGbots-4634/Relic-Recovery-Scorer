@@ -82,7 +82,7 @@ public class ExportActivity extends Activity
                 {
                     try
                     {
-                        alertDialogTest();
+                        showCsvAppendFileChooserDialog();
                     }
                     catch (IOException e)
                     {
@@ -91,7 +91,7 @@ public class ExportActivity extends Activity
                 }
                 else
                 {
-                    Export.exportWithPermissionsWrapper(bundle);
+                    Export.doExport(bundle);
                 }
             }
         });
@@ -107,7 +107,7 @@ public class ExportActivity extends Activity
         return true;
     }
 
-    private void alertDialogTest () throws IOException
+    private void showCsvAppendFileChooserDialog () throws IOException
     {
         final AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Select a file to add to:");
@@ -128,10 +128,8 @@ public class ExportActivity extends Activity
             @Override
             public void onClick (DialogInterface dialog, int which)
             {
-                //String strName = arrayAdapter.getItem(which).getName();
                 bundle.fileForCsvAdd = arrayAdapter.getItem(which);
-                System.out.println("test" + bundle.fileForCsvAdd.getAbsolutePath());
-                Export.exportWithPermissionsWrapper(bundle);
+                Export.doExport(bundle);
             }
         });
         builderSingle.show();

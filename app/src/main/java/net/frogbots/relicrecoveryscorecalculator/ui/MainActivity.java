@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -25,6 +26,8 @@ import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.Export;
+
+import static net.frogbots.relicrecoveryscorecalculator.backend.export.Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
 
 @SuppressLint("SetTextI18n")
 public class MainActivity extends Activity
@@ -806,9 +809,23 @@ public class MainActivity extends Activity
 
         else if (id == R.id.exportMenuItem)
         {
-            //ExportScores.exportWithPermissionsWrapper(this);
-            Intent intent = new Intent(this, ExportActivity.class);
-            startActivity(intent);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                int hasWriteStoragePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE_PERMISSIONS);
+                }
+                else
+                {
+                    launchExportActivity();
+                }
+            }
+            else
+            {
+                launchExportActivity();
+            }
+
             return true;
         }
 
@@ -825,31 +842,36 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    private void launchExportActivity()
+    {
+        Intent intent = new Intent(this, ExportActivity.class);
+        startActivity(intent);
+    }
+
     @SuppressLint("NewApi")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         switch (requestCode)
         {
-            case Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS:
+            case REQUEST_EXTERNAL_STORAGE_PERMISSIONS:
                 if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 {
                     //denied
-                    UiUtils.showSimpleOkDialog(MainActivity.this, "In order for the exported file to be written to disk, you need to grant the extenal storage permission");
+                    UiUtils.showSimpleOkDialogWithTitle(MainActivity.this, "Permission denied!", "In order for the exported file to be written to disk, you need to grant the external storage permission.");
                 }
                 else
                 {
                     if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     {
                         //allowed
-                        //Export.exportWithPermissionsWrapper(this);
+                        launchExportActivity();
                     }
 
                     else
                     {
                         //set to never ask again
-                        //do something here.
-                        UiUtils.showSimpleOkDialog(MainActivity.this, "You have permanently denied the external storage permission. In order to use the Export Scores feature, you need to go to your system settings and grant the permission.");
+                        UiUtils.showSimpleOkDialogWithTitle(MainActivity.this, "Permission denied!", "You have permanently denied the external storage permission. In order to use the Export Scores feature, you need to go to your system settings and grant the permission.");
                     }
                 }
                 break;

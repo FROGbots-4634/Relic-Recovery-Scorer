@@ -27,6 +27,27 @@ public class UiUtils
         alert11.show();
     }
 
+    static void showSimpleOkDialogWithTitle(final Activity activity, String title, String msg)
+    {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+        builder1.setMessage(msg);
+        builder1.setTitle(title);
+        builder1.setCancelable(false);
+        builder1.setNegativeButton(
+                "Ok",
+                new DialogInterface.OnClickListener()
+                {
+                    @SuppressLint("NewApi")
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
     public static void showNoInternetDialog(final Activity activity)
     {
         activity.runOnUiThread(new Runnable()

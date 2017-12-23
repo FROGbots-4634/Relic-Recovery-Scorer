@@ -1,32 +1,14 @@
 package net.frogbots.relicrecoveryscorecalculator.backend.export;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvAddExport;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.CsvNewExport;
-import java.io.File;
 import java.io.IOException;
 
 public class Export
 {
     public static final int REQUEST_EXTERNAL_STORAGE_PERMISSIONS = 123;
 
-    public static void exportWithPermissionsWrapper(ExportBundle exportBundle)
-    {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            int hasWriteStoragePermission = exportBundle.activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (hasWriteStoragePermission != PackageManager.PERMISSION_GRANTED)
-            {
-                exportBundle.activity.requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE_PERMISSIONS);
-                return;
-            }
-        }
-        export(exportBundle);
-    }
-
-    static private void export (ExportBundle exportBundle)
+    public static void doExport (ExportBundle exportBundle)
     {
         switch (exportBundle.exportType)
         {
