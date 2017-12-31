@@ -235,11 +235,7 @@ public class Scores
          * Endgame
          */
         int endgameRelicPositionScore = CalculateScores.calculateEndgameRelicPositionScore(endgameRelicPosition);
-        int endgameRelicOrientationScore = 0;
-        if(endgameRelicPositionScore != 0)
-        {
-            endgameRelicOrientationScore = CalculateScores.calculateEndgameRelicOrientationScore(endgameRelicOrientation);
-        }
+        int endgameRelicOrientationScore = CalculateScores.calculateEndgameRelicOrientationScore(endgameRelicOrientation);
         int endgameRobotBalancedScore = CalculateScores.calculateEndgameRobotBalancedScore(endgameRobotBalanced);
 
         /*

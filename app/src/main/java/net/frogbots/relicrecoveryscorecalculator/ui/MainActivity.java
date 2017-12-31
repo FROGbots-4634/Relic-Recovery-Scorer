@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +28,9 @@ import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import static net.frogbots.relicrecoveryscorecalculator.backend.export.Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
 
 @SuppressLint("SetTextI18n")
@@ -34,47 +38,36 @@ public class MainActivity extends Activity
 {
     Summary summary;
 
-    /*
-     * Parking spinner
-     */
-    Spinner parkingSpinner;
-    ArrayAdapter<CharSequence> parkingAdapter;
+    Spinner[] spinners;
+    String[] spinnerNames = new String[] {
+            "parkingSpinner",
+            "jewelSpinner",
+            "glyphSpinner",
+            "cipherSpinner",
+            "relicPositionSpinner",
+            "relicOrientationSpinner",
+            "robotBalancedSpinner"
+    };
 
-    /*
-     * Jewel spinner
-     */
-    Spinner jewelSpinner;
-    ArrayAdapter<CharSequence> jewelAdapter;
+    int[] spinnerIds = new int[] {
+            R.id.card_autonomous_parking_spinner,
+            R.id.card_autonomous_jewel_spinner,
+            R.id.card_autonomous_glyph_spinner,
+            R.id.card_teleop_cipher_spinner,
+            R.id.card_endgame_relic_position_spinner,
+            R.id.card_endgame_relic_orientation_spinner,
+            R.id.card_endgame_robot_balanced_spinner
+    };
 
-    /*
-     * Glyph spinner
-     */
-    Spinner glyphSpinner;
-    ArrayAdapter<CharSequence> glyphAdapter;
-
-    /*
-     * Cipher spinner
-     */
-    Spinner cipherSpinner;
-    ArrayAdapter<CharSequence> cipherAdapter;
-
-    /*
-     * Relic position spinner
-     */
-    Spinner relicPositionSpinner;
-    ArrayAdapter<CharSequence> relicPositionAdapter;
-
-    /*
-     * Relic orientation spinner
-     */
-    Spinner relicOrientationSpinner;
-    ArrayAdapter<CharSequence> relicOrientationAdapter;
-
-    /*
-     * Robot balanced spinner
-     */
-    Spinner robotBalancedSpinner;
-    ArrayAdapter<CharSequence> robotBalancedAdapter;
+    int[] spinnerLayouts = new int[] {
+            R.array.parking,
+            R.array.jewelOptions,
+            R.array.glyphOptions,
+            R.array.CipherOptions,
+            R.array.relicPositionOptions,
+            R.array.relicOrientationOptions,
+            R.array.robotBalancedOptions
+    };
 
     /*
      * Autonomous
@@ -153,6 +146,20 @@ public class MainActivity extends Activity
 
     }
 
+    private void setupSpinners()
+    {
+        spinners = new Spinner[spinnerNames.length];
+        for(int i = 0; i < spinners.length; i++)
+        {
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, spinnerLayouts[i], android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            spinners[i] = (Spinner) findViewById(spinnerIds[i]);
+            spinners[i].setAdapter(adapter);
+            spinners[i].setOnItemSelectedListener(spinnerListener);
+        }
+    }
+
     @Override
     protected void onPause()
     {
@@ -199,16 +206,7 @@ public class MainActivity extends Activity
         penaltiesMajorTxtView = (TextView) findViewById(R.id.penalties_major_txtView);
         penaltiesMajorMinus = (ImageButton) findViewById(R.id.penalty_major_minus);
 
-        /*
-         * Setup spinners
-         */
-        setupParkingSpinner();
-        setupJewelSpinner();
-        setupGlyphSpinner();
-        setupCipherSpinner();
-        setupRelicPositionSpinner();
-        setupRelicOrientationSpinner();
-        setupRobotBalancedSpinner();
+        setupSpinners();
 
         /*
          * Init all the listeners
@@ -223,15 +221,6 @@ public class MainActivity extends Activity
 
     private void calcScore()
     {
-        if(relicPositionSpinner.getSelectedItemPosition() == 0)
-        {
-            relicOrientationSpinner.setEnabled(false);
-            relicOrientationSpinner.setSelection(0);
-        }
-        else
-        {
-            relicOrientationSpinner.setEnabled(true);
-        }
         TextView scoreView = (TextView) findViewById(R.id.scoreView);
         scoreView.setText("Score: " + Integer.toString(Scores.getTotalScore()));
         summary.updateSummary();
@@ -239,12 +228,14 @@ public class MainActivity extends Activity
 
     private void resetScores()
     {
+        for (Spinner spinner : spinners)
+        {
+            spinner.setSelection(0);
+        }
+
         //Auto
-        jewelSpinner.setSelection(0);
-        glyphSpinner.setSelection(0);
         autonomousGlyphsScoredMinus.setEnabled(false);
         autonomousGlyphsScoredTxtView.setText("0");
-        parkingSpinner.setSelection(0);
 
         //Teleop
         teleopGlyphsInCryptoboxMinus.setEnabled(false);
@@ -255,12 +246,6 @@ public class MainActivity extends Activity
         teleopCryptoboxColumnsCompleteMinus.setEnabled(false);
         teleopCryptoboxColumnsCompleteTxtView.setText("0");
         teleopCryptoboxColumnsCompletePlus.setEnabled(true);
-        cipherSpinner.setSelection(0);
-
-        //Endgame
-        relicPositionSpinner.setSelection(0);
-        relicOrientationSpinner.setSelection(0);
-        robotBalancedSpinner.setSelection(0);
 
         //Penalty
         penaltiesMinorMinus.setEnabled(false);
@@ -445,258 +430,6 @@ public class MainActivity extends Activity
         });
     }
 
-    private void setupParkingSpinner()
-    {
-        /*
-         * Grab a handle to the parking spinner
-         */
-        parkingSpinner = (Spinner) findViewById(R.id.card_autonomous_parking_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        parkingAdapter = ArrayAdapter.createFromResource(this, R.array.parking, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        parkingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        parkingSpinner.setAdapter(parkingAdapter);
-
-        parkingSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_autonomous_parking_spinner)
-                {
-                    Scores.setParkingLevel(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
-    private void setupJewelSpinner()
-    {
-        /*
-         * Grab a handle to the jewel spinner
-         */
-        jewelSpinner = (Spinner) findViewById(R.id.card_autonomous_jewel_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        jewelAdapter = ArrayAdapter.createFromResource(this, R.array.jewelOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        jewelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        jewelSpinner.setAdapter(jewelAdapter);
-
-        jewelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_autonomous_jewel_spinner)
-                {
-                    Scores.setAutonomousJewelLevel(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
-    private void setupGlyphSpinner()
-    {
-        /*
-         * Grab a handle to the glyph spinner
-         */
-        glyphSpinner = (Spinner) findViewById(R.id.card_autonomous_glyph_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        glyphAdapter = ArrayAdapter.createFromResource(this, R.array.glyphOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        glyphAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        glyphSpinner.setAdapter(glyphAdapter);
-
-        glyphSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_autonomous_glyph_spinner)
-                {
-                    Scores.setAutonomousPreloadedGlyphLevel(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
-    private void setupCipherSpinner()
-    {
-        /*
-         * Grab a handle to the cipher spinner
-         */
-        cipherSpinner = (Spinner) findViewById(R.id.card_teleop_cipher_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        cipherAdapter = ArrayAdapter.createFromResource(this, R.array.CipherOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        cipherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        cipherSpinner.setAdapter(cipherAdapter);
-
-        cipherSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_teleop_cipher_spinner)
-                {
-                    Scores.setTeleopCipherLevel(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
-    private void setupRelicPositionSpinner()
-    {
-        /*
-         * Grab a handle to the relic position spinner
-         */
-        relicPositionSpinner = (Spinner) findViewById(R.id.card_endgame_relic_position_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        relicPositionAdapter = ArrayAdapter.createFromResource(this, R.array.relicPositionOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        relicPositionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        relicPositionSpinner.setAdapter(relicPositionAdapter);
-
-        relicPositionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_endgame_relic_position_spinner)
-                {
-                    Scores.setEndgameRelicPosition(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
-    private void setupRelicOrientationSpinner()
-    {
-        /*
-         * Grab a handle to the relic orientation spinner
-         */
-        relicOrientationSpinner = (Spinner) findViewById(R.id.card_endgame_relic_orientation_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        relicOrientationAdapter = ArrayAdapter.createFromResource(this, R.array.relicOrientationOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        relicOrientationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        relicOrientationSpinner.setAdapter(relicOrientationAdapter);
-
-        relicOrientationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_endgame_relic_orientation_spinner)
-                {
-                    Scores.setEndgameRelicOrientation(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
-    private void setupRobotBalancedSpinner()
-    {
-        /*
-         * Grab a handle to the relic orientation spinner
-         */
-        robotBalancedSpinner = (Spinner) findViewById(R.id.card_endgame_robot_balanced_spinner);
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        robotBalancedAdapter = ArrayAdapter.createFromResource(this, R.array.robotBalancedOptions, android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        robotBalancedAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        robotBalancedSpinner.setAdapter(robotBalancedAdapter);
-
-        robotBalancedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l)
-            {
-                if (adapterView.getId() == R.id.card_endgame_robot_balanced_spinner)
-                {
-                    Scores.setEndgameRobotBalanced(pos);
-                    calcScore();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView)
-            {
-
-            }
-        });
-    }
-
     private void setupPenaltiesMinor()
     {
         penaltiesMinorMinus.setEnabled(false);
@@ -770,6 +503,51 @@ public class MainActivity extends Activity
             }
         });
     }
+
+    AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener()
+    {
+        @Override
+        public void onItemSelected (AdapterView<?> parent, View view, int position, long id)
+        {
+            switch (parent.getId())
+            {
+                case R.id.card_autonomous_parking_spinner:
+                    Scores.setParkingLevel(position);
+                    break;
+
+                case R.id.card_autonomous_jewel_spinner:
+                    Scores.setAutonomousJewelLevel(position);
+                    break;
+
+                case R.id.card_autonomous_glyph_spinner:
+                    Scores.setAutonomousPreloadedGlyphLevel(position);
+                    break;
+
+                case R.id.card_teleop_cipher_spinner:
+                    Scores.setTeleopCipherLevel(position);
+                    break;
+
+                case R.id.card_endgame_relic_position_spinner:
+                    Scores.setEndgameRelicPosition(position);
+                    break;
+
+                case R.id.card_endgame_relic_orientation_spinner:
+                    Scores.setEndgameRelicOrientation(position);
+                    break;
+
+                case R.id.card_endgame_robot_balanced_spinner:
+                    Scores.setEndgameRobotBalanced(position);
+                    break;
+            }
+            calcScore();
+        }
+
+        @Override
+        public void onNothingSelected (AdapterView<?> parent)
+        {
+
+        }
+    };
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState)
@@ -905,20 +683,20 @@ public class MainActivity extends Activity
                     .setMessage(Html.fromHtml(msg))
                     .setCancelable(false)
                     .setNegativeButton(
-                    "Ok",
-                    new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int id)
-                        {
-                            dialog.cancel();
+                            "Ok",
+                            new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    dialog.cancel();
 
                             /*
                              * Now that the user has seen the dialog, set the isFirstRun boolean
                              * to false so that it won't be shown again
                              */
-                            editor.putBoolean("isFirstRun_b", false).apply();
-                        }
-                    }).create();
+                                    editor.putBoolean("isFirstRun_b", false).apply();
+                                }
+                            }).create();
 
             dialog.show();
             ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
