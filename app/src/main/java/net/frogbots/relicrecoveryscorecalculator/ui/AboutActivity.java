@@ -45,6 +45,21 @@ public class AboutActivity extends Activity
         });
 
         /*
+         * View GitHub repository
+         */
+        Button viewGithubRepoBtn = (Button) findViewById(R.id.viewGithubRepo);
+        viewGithubRepoBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View view)
+            {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://github.com/FROGbots-4634/Relic-Recovery-Scorer"));
+                startActivity(i);
+            }
+        });
+
+        /*
          * Visit our YouTube channel
          */
         Button vistOurYoutubeChannelBtn = (Button) findViewById(R.id.visitOurYoutubeChannel);
