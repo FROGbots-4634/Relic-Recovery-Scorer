@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,9 +30,10 @@ public class ExportActivity extends Activity
     Spinner typeSpinner;
     ArrayAdapter<CharSequence> typeAdapter;
 
-    EditText commentTxtView;
-    EditText matchTxtView;
+    EditText commentEditText;
+    EditText matchEditText;
     EditText filenameEditText;
+    EditText teamEditText;
     TextView filenameHeader;
 
     ProgressDialog progressDialog;
@@ -51,8 +51,9 @@ public class ExportActivity extends Activity
 
         setupSdcardDir();
 
-        commentTxtView = (EditText) findViewById(R.id.commentTextView);
-        matchTxtView = (EditText) findViewById(R.id.matchTextView);
+        teamEditText = (EditText) findViewById(R.id.teamTxtView);
+        commentEditText = (EditText) findViewById(R.id.commentTextView);
+        matchEditText = (EditText) findViewById(R.id.matchTextView);
         filenameEditText = (EditText) findViewById(R.id.filenameEditTet);
         filenameHeader = (TextView) findViewById(R.id.filenameHeader);
         exportButton = (Button) findViewById(R.id.exportButton);
@@ -77,8 +78,9 @@ public class ExportActivity extends Activity
             {
                 bundle.activity = ExportActivity.this;
                 bundle.exportType = exportType;
-                bundle.match = matchTxtView.getText().toString();
-                bundle.comment = commentTxtView.getText().toString();
+                bundle.match = matchEditText.getText().toString();
+                bundle.team = Integer.parseInt(teamEditText.getText().toString());
+                bundle.comment = commentEditText.getText().toString();
                 bundle.scores = scores;
                 bundle.filename = filenameEditText.getText().toString();
 

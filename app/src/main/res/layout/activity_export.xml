@@ -48,6 +48,18 @@
             android:hint="SF-2"/>
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Team:"/>
+
+        <EditText
+            android:id="@+id/teamTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="4634"
+            android:inputType="number"/>
+
+        <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:hint="8619 died from ESD"/>
+            android:hint="scored relic in 2nd zone, autonomous failed"/>
 
         <Button
             android:id="@+id/exportButton"

@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import com.opencsv.CSVWriter;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +22,7 @@ class CsvCommon
     static final String[] columns = {
             "Time",
             "Match",
+            "Team",
             "Comment",
             "Jewel",
             "Pre-loaded glyph",
@@ -44,27 +47,28 @@ class CsvCommon
         writer.close();
     }
 
-    static void writeScoresToRow (String[][] array, String comment, String match, int rowNumber)
+    static void writeScoresToRow (String[][] array, ExportBundle bundle, int rowNumber)
     {
         @SuppressLint("SimpleDateFormat")
         DateFormat df = new SimpleDateFormat("EEE d MMM yyyy HH:mm");
 
         array[rowNumber][0]  = (df.format(Calendar.getInstance().getTime()));
-        array[rowNumber][1]  = match;
-        array[rowNumber][2]  = comment;
-        array[rowNumber][3]  = Utils.jewelForExport(Scores.getAutonomousJewelLevel());
-        array[rowNumber][4]  = (Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
-        array[rowNumber][5]  = Integer.toString(Scores.getAutonomousGlyphsScored());
-        array[rowNumber][6]  = Boolean.toString(Scores.getParkingLevel() > 0);
-        array[rowNumber][7]  = Integer.toString(Scores.getTeleOpGlyphsScored());
-        array[rowNumber][8]  = Integer.toString(Scores.getTeleopCryptoboxRowsComplete());
-        array[rowNumber][9]  = Integer.toString(Scores.getTeleopCryptoboxColumnsComplete());
-        array[rowNumber][10] = Boolean.toString(Scores.getTeleopCipherLevel() > 0);
-        array[rowNumber][11] = Integer.toString(Scores.getEndgameRelicPosition());
-        array[rowNumber][12] = Boolean.toString(Scores.getEndgameRelicOrientation() > 0);
-        array[rowNumber][13] = Boolean.toString(Scores.getEndgameRobotBalanced() > 0);
-        array[rowNumber][14] = Integer.toString(Scores.getNumMinorPenalties());
-        array[rowNumber][15] = Integer.toString(Scores.getNumMajorPenalties());
-        array[rowNumber][16] = Integer.toString(Scores.getTotalScore());
+        array[rowNumber][1]  = bundle.match;
+        array[rowNumber][2]  = Integer.toString(bundle.team);
+        array[rowNumber][3]  = bundle.comment;
+        array[rowNumber][4]  = Utils.jewelForExport(Scores.getAutonomousJewelLevel());
+        array[rowNumber][5]  = (Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
+        array[rowNumber][6]  = Integer.toString(Scores.getAutonomousGlyphsScored());
+        array[rowNumber][7]  = Boolean.toString(Scores.getParkingLevel() > 0);
+        array[rowNumber][8]  = Integer.toString(Scores.getTeleOpGlyphsScored());
+        array[rowNumber][9]  = Integer.toString(Scores.getTeleopCryptoboxRowsComplete());
+        array[rowNumber][10]  = Integer.toString(Scores.getTeleopCryptoboxColumnsComplete());
+        array[rowNumber][11] = Boolean.toString(Scores.getTeleopCipherLevel() > 0);
+        array[rowNumber][12] = Integer.toString(Scores.getEndgameRelicPosition());
+        array[rowNumber][13] = Boolean.toString(Scores.getEndgameRelicOrientation() > 0);
+        array[rowNumber][14] = Boolean.toString(Scores.getEndgameRobotBalanced() > 0);
+        array[rowNumber][15] = Integer.toString(Scores.getNumMinorPenalties());
+        array[rowNumber][16] = Integer.toString(Scores.getNumMajorPenalties());
+        array[rowNumber][17] = Integer.toString(Scores.getTotalScore());
     }
 }

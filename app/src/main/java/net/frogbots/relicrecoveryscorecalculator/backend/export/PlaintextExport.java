@@ -40,6 +40,7 @@ class PlaintextExport
         outputWriter.write(df.format(Calendar.getInstance().getTime()));
 
         outputWriter.write("\r\n\r\nMatch: "                  + exportBundle.match);
+        outputWriter.write("\r\nTeam: "                       + exportBundle.team);
         outputWriter.write("\r\nComment: "                    + exportBundle.comment);
         outputWriter.write("\r\nJewel: "                      + Utils.jewelForExport(Scores.getAutonomousJewelLevel()));
         outputWriter.write("\r\nPre-loaded glyph: "           + Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
