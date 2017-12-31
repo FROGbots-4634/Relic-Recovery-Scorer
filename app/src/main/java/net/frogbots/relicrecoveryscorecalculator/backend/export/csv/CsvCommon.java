@@ -1,9 +1,8 @@
 package net.frogbots.relicrecoveryscorecalculator.backend.export.csv;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+
 import com.opencsv.CSVWriter;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
@@ -19,26 +18,57 @@ import java.util.Calendar;
 
 class CsvCommon
 {
+    private static final String COLUMN_TIME                   = "Time";
+    private static final String COLUMN_MATCH                  = "Match";
+    private static final String COLUMN_TEAM                   = "Team";
+    private static final String COLUMN_COMMENT                = "Comment";
+    private static final String COLUMN_JEWEL                  = "Jewel";
+    private static final String COLUMN_PRELOADED_GLPYH        = "Pre-loaded glyph";
+    private static final String COLUMN_AUTO_GLPYHS_SCORED     = "[Auto] glyphs scored";
+    private static final String COLUMN_AUTO_PARKING           = "Autonomous parking";
+    private static final String COLUMN_TELE_GLYPHS_SCORED     = "[Tele-Op] glyphs scored";
+    private static final String COLUMN_CRYPT_ROWS_COMPLETE    = "Cryptobox rows complete";
+    private static final String COLUMN_CRYPT_COLUMNS_COMPLETE = "Cryptobox columns complete";
+    private static final String COLUMN_CIPHER_COMPLETE        = "Cipher completed";
+    private static final String COLUMN_RELIC_POSITION         = "Relic position";
+    private static final String COLUMN_RELIC_UPRIGHT          = "Relic upright";
+    private static final String COLUMN_ROBOT_BALANCED         = "Robot balanced";
+    private static final String COLUMN_MINOR_PENALTIES        = "Minor penalties";
+    private static final String COLUMN_MAJOR_PENALTIES        = "Major penalties";
+    private static final String COLUMN_TOTAL_SCORE            = "TOTAL SCORE";
+
     static final String[] columns = {
-            "Time",
-            "Match",
-            "Team",
-            "Comment",
-            "Jewel",
-            "Pre-loaded glyph",
-            "[Auto] glyphs scored",
-            "Autonomous parking",
-            "[Tele-Op] glyphs scored",
-            "Cryptobox rows complete",
-            "Cryptobox columns complete",
-            "Cipher completed",
-            "Relic position",
-            "Relic upright",
-            "Robot balanced",
-            "Minor penalties",
-            "Major penalties",
-            "TOTAL SCORE"
+            COLUMN_TIME,
+            COLUMN_MATCH,
+            COLUMN_TEAM,
+            COLUMN_COMMENT,
+            COLUMN_JEWEL,
+            COLUMN_PRELOADED_GLPYH,
+            COLUMN_AUTO_GLPYHS_SCORED,
+            COLUMN_AUTO_PARKING,
+            COLUMN_TELE_GLYPHS_SCORED,
+            COLUMN_CRYPT_ROWS_COMPLETE,
+            COLUMN_CRYPT_COLUMNS_COMPLETE,
+            COLUMN_CIPHER_COMPLETE,
+            COLUMN_RELIC_POSITION,
+            COLUMN_RELIC_UPRIGHT,
+            COLUMN_ROBOT_BALANCED,
+            COLUMN_MINOR_PENALTIES,
+            COLUMN_MAJOR_PENALTIES,
+            COLUMN_TOTAL_SCORE
     };
+
+    static int findIndexInColumnArray(String item)
+    {
+        for(int i = 0; i < columns.length; i ++)
+        {
+            if(columns[i].equals(item))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     static void saveToCSV (Context context, File file, String[][] array) throws IOException
     {
@@ -52,23 +82,23 @@ class CsvCommon
         @SuppressLint("SimpleDateFormat")
         DateFormat df = new SimpleDateFormat("EEE d MMM yyyy HH:mm");
 
-        array[rowNumber][0]  = (df.format(Calendar.getInstance().getTime()));
-        array[rowNumber][1]  = bundle.match;
-        array[rowNumber][2]  = Integer.toString(bundle.team);
-        array[rowNumber][3]  = bundle.comment;
-        array[rowNumber][4]  = Utils.jewelForExport(Scores.getAutonomousJewelLevel());
-        array[rowNumber][5]  = (Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
-        array[rowNumber][6]  = Integer.toString(Scores.getAutonomousGlyphsScored());
-        array[rowNumber][7]  = Boolean.toString(Scores.getParkingLevel() > 0);
-        array[rowNumber][8]  = Integer.toString(Scores.getTeleOpGlyphsScored());
-        array[rowNumber][9]  = Integer.toString(Scores.getTeleopCryptoboxRowsComplete());
-        array[rowNumber][10]  = Integer.toString(Scores.getTeleopCryptoboxColumnsComplete());
-        array[rowNumber][11] = Boolean.toString(Scores.getTeleopCipherLevel() > 0);
-        array[rowNumber][12] = Integer.toString(Scores.getEndgameRelicPosition());
-        array[rowNumber][13] = Boolean.toString(Scores.getEndgameRelicOrientation() > 0);
-        array[rowNumber][14] = Boolean.toString(Scores.getEndgameRobotBalanced() > 0);
-        array[rowNumber][15] = Integer.toString(Scores.getNumMinorPenalties());
-        array[rowNumber][16] = Integer.toString(Scores.getNumMajorPenalties());
-        array[rowNumber][17] = Integer.toString(Scores.getTotalScore());
+        array[rowNumber][findIndexInColumnArray(COLUMN_TIME)]                    = (df.format(Calendar.getInstance().getTime()));
+        array[rowNumber][findIndexInColumnArray(COLUMN_MATCH)]                   = bundle.match;
+        array[rowNumber][findIndexInColumnArray(COLUMN_TEAM)]                    = Integer.toString(bundle.team);
+        array[rowNumber][findIndexInColumnArray(COLUMN_COMMENT)]                 = bundle.comment;
+        array[rowNumber][findIndexInColumnArray(COLUMN_JEWEL)]                   = Utils.jewelForExport(Scores.getAutonomousJewelLevel());
+        array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH)]         = (Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
+        array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_GLPYHS_SCORED)]      = Integer.toString(Scores.getAutonomousGlyphsScored());
+        array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_PARKING)]            = Boolean.toString(Scores.getParkingLevel() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_TELE_GLYPHS_SCORED)]      = Integer.toString(Scores.getTeleOpGlyphsScored());
+        array[rowNumber][findIndexInColumnArray(COLUMN_CRYPT_ROWS_COMPLETE)]     = Integer.toString(Scores.getTeleopCryptoboxRowsComplete());
+        array[rowNumber][findIndexInColumnArray(COLUMN_CRYPT_COLUMNS_COMPLETE)]  = Integer.toString(Scores.getTeleopCryptoboxColumnsComplete());
+        array[rowNumber][findIndexInColumnArray(COLUMN_CIPHER_COMPLETE)]         = Boolean.toString(Scores.getTeleopCipherLevel() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_RELIC_POSITION)]          = Integer.toString(Scores.getEndgameRelicPosition());
+        array[rowNumber][findIndexInColumnArray(COLUMN_RELIC_UPRIGHT)]           = Boolean.toString(Scores.getEndgameRelicOrientation() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_ROBOT_BALANCED)]          = Boolean.toString(Scores.getEndgameRobotBalanced() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_MINOR_PENALTIES)]         = Integer.toString(Scores.getNumMinorPenalties());
+        array[rowNumber][findIndexInColumnArray(COLUMN_MAJOR_PENALTIES)]         = Integer.toString(Scores.getNumMajorPenalties());
+        array[rowNumber][findIndexInColumnArray(COLUMN_TOTAL_SCORE)]             = Integer.toString(Scores.getTotalScore());
     }
 }
