@@ -13,7 +13,7 @@ import java.net.InetAddress;
 
 public class Utils
 {
-    static boolean areWeOnline (Context context)
+    public static boolean areWeOnline (Context context)
     {
         return areWeConnectedToANetwork(context) && canWeActuallyAccessTheInternet();
     }
