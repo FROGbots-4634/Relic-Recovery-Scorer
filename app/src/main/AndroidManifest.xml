@@ -17,19 +17,31 @@
             android:name=".ui.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
+
         <activity
             android:name=".ui.AboutActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
-        <activity android:name=".ui.ExportActivity">
+
+        <activity
+            android:name=".ui.ExportActivity">
         </activity>
+
+        <activity
+            android:name=".ui.AppIntroActivity"
+            android:theme="@style/Theme.Intro">
+
+        </activity>
+
     </application>
 
 </manifest>

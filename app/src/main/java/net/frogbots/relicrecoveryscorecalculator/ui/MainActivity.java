@@ -13,8 +13,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
-import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
@@ -30,12 +28,8 @@ import android.widget.TextView;
 import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
-import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 
 import org.jsoup.Jsoup;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static net.frogbots.relicrecoveryscorecalculator.backend.export.Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
 
@@ -128,6 +122,7 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        showFirstIntroActivity();
         setContentView(R.layout.activity_main);
 
         try
@@ -160,7 +155,6 @@ public class MainActivity extends Activity
                 }
             }
         });
-
     }
 
     private void setupSpinners()
@@ -186,8 +180,6 @@ public class MainActivity extends Activity
 
     private void doInit()
     {
-        showFirstRunGreeting();
-
         /*
          * Grab handles to all the buttons and text views that we'll be updating
          */
@@ -676,7 +668,7 @@ public class MainActivity extends Activity
         }
     }
 
-    private void showFirstRunGreeting()
+    private void showFirstIntroActivity()
     {
         /*
          * Grab a handle to the SharedPrefs
@@ -690,33 +682,12 @@ public class MainActivity extends Activity
         if(preferences.getBoolean("isFirstRun_b", true))
         {
             /*
-             * Yup, it's the first run; build an alert dialog
+             * Yup, it's the first run; show the intro
              */
+            Intent intent = new Intent(this, AppIntroActivity.class);
+            startActivity(intent);
 
-            String msg = "This app is now open source!<br><br><a href='https://github.com/FROGbots-4634/Relic-Recovery-Scorer'>Check out the repository on GitHub!</a>";
-
-            AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle("Hi there!")
-                    .setMessage(Html.fromHtml(msg))
-                    .setCancelable(false)
-                    .setNegativeButton(
-                            "Ok",
-                            new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int id)
-                                {
-                                    dialog.cancel();
-
-                            /*
-                             * Now that the user has seen the dialog, set the isFirstRun boolean
-                             * to false so that it won't be shown again
-                             */
-                                    editor.putBoolean("isFirstRun_b", false).apply();
-                                }
-                            }).create();
-
-            dialog.show();
-            ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
+            editor.putBoolean("isFirstRun_b", false).apply();
         }
     }
 
