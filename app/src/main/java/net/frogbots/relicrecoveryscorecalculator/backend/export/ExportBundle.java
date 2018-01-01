@@ -10,7 +10,7 @@ public class ExportBundle
     public Activity activity;
     public String match;
     public String comment;
-    public int team;
+    public String team;
     public Scores scores;
     public String filename;
     public File fileForCsvAdd;

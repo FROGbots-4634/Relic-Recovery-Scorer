@@ -84,7 +84,7 @@ class CsvCommon
 
         array[rowNumber][findIndexInColumnArray(COLUMN_TIME)]                    = (df.format(Calendar.getInstance().getTime()));
         array[rowNumber][findIndexInColumnArray(COLUMN_MATCH)]                   = bundle.match;
-        array[rowNumber][findIndexInColumnArray(COLUMN_TEAM)]                    = Integer.toString(bundle.team);
+        array[rowNumber][findIndexInColumnArray(COLUMN_TEAM)]                    = bundle.team;
         array[rowNumber][findIndexInColumnArray(COLUMN_COMMENT)]                 = bundle.comment;
         array[rowNumber][findIndexInColumnArray(COLUMN_JEWEL)]                   = Utils.jewelForExport(Scores.getAutonomousJewelLevel());
         array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH)]         = (Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));

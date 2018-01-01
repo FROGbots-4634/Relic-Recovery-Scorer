@@ -79,7 +79,7 @@ public class ExportActivity extends Activity
                 bundle.activity = ExportActivity.this;
                 bundle.exportType = exportType;
                 bundle.match = matchEditText.getText().toString();
-                bundle.team = Integer.parseInt(teamEditText.getText().toString());
+                bundle.team = teamEditText.getText().toString();
                 bundle.comment = commentEditText.getText().toString();
                 bundle.scores = scores;
                 bundle.filename = filenameEditText.getText().toString();
