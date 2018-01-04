@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+def apiKeysFileStream = new FileInputStream(rootProject.file("keys.properties"))
+def apiKeys = new Properties()
+apiKeys.load(apiKeysFileStream)
+
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
@@ -21,6 +26,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'TOA_KEY', apiKeys['TOA_KEY']
     }
 }
 
