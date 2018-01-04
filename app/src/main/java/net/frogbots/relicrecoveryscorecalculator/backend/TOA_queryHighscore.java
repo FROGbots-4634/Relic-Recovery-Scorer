@@ -8,6 +8,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+import net.frogbots.relicrecoveryscorecalculator.BuildConfig;
 import net.frogbots.relicrecoveryscorecalculator.ui.UiUtils;
 
 import org.json.JSONArray;
@@ -25,7 +26,7 @@ import okhttp3.Response;
 public class TOA_queryHighscore
 {
     private static final String apiApplicationName = "FTC Relic Recovery Scorer";
-    private static final String apiKey = "";
+    private static final String apiKey = BuildConfig.TOA_KEY;
     private static ProgressDialog toaProgressDialog;
     private static final String TOA_HIGHSCORE_ELIM_WITHOUT_PENALTY_URL = "https://theorangealliance.org/apiv2/matches/1718/high-scores/elim-no-penalty";
     private static final String TOA_HIGHSCORE_QUAL_WITHOUT_PENALTY_URL = "https://theorangealliance.org/apiv2/matches/1718/high-scores/qual-no-penalty";
