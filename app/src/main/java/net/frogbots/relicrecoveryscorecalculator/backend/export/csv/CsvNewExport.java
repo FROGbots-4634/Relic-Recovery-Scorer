@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CsvNewExport
 {
-    public static String exportCSV (ExportBundle exportBundle) throws IOException, FileAlreadyExistsException
+    public static File exportCSV (ExportBundle exportBundle) throws IOException, FileAlreadyExistsException
     {
         File file = new File(Utils.getExportDirPath() + exportBundle.filename + ".csv");
 
@@ -23,6 +23,6 @@ public class CsvNewExport
         CsvCommon.writeScoresToRow(array, exportBundle, 1);
         CsvCommon.saveToCSV(exportBundle.activity, file, array);
 
-        return file.getAbsolutePath();
+        return file;
     }
 }

@@ -20,7 +20,7 @@ public class CsvAddExport
         return dataArr;
     }
 
-    public static String export (ExportBundle exportBundle) throws IOException, CsvNotCompatibleException
+    public static File export (ExportBundle exportBundle) throws IOException, CsvNotCompatibleException
     {
         /*
          * Read in the file that we need to append to
@@ -50,7 +50,7 @@ public class CsvAddExport
             CsvCommon.writeScoresToRow(out, exportBundle, count);
             CsvCommon.saveToCSV(exportBundle.activity, exportBundle.fileForCsvAdd, out);
         }
-        return exportBundle.fileForCsvAdd.getAbsolutePath();
+        return exportBundle.fileForCsvAdd;
     }
 
     private static void arrayCopy(String[][] aSource, String[][] aDestination)

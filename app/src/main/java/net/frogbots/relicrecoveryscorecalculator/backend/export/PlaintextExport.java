@@ -18,7 +18,7 @@ import java.util.Calendar;
 
 class PlaintextExport
 {
-    public static String export(ExportBundle exportBundle) throws IOException, FileAlreadyExistsException
+    public static File export(ExportBundle exportBundle) throws IOException, FileAlreadyExistsException
     {
         File file = new File(Utils.getExportDirPath() + exportBundle.filename + ".txt");
 
@@ -64,6 +64,6 @@ class PlaintextExport
         outputWriter.close();
         stream.close();
 
-        return file.getAbsolutePath();
+        return file;
     }
 }

@@ -78,6 +78,13 @@
             android:layout_height="wrap_content"
             android:text="Export"/>
 
+        <Button
+            android:id="@+id/exportToLastFileButton"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Append to last file [test.csv]"/>
+
     </LinearLayout>
 
 </ScrollView>

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,16 +40,26 @@ public class ExportActivity extends Activity
 
     ProgressDialog progressDialog;
     Button exportButton;
+    Button exportToLastFileBtn;
 
     ExportType exportType;
     Scores scores;
     ExportBundle bundle = new ExportBundle();
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor prefsEditor;
+
+    private static final String KEY_LAST_CSV_FILE_PATH = "lastCsvExportFilePath";
+    private static final String KEY_LAST_CSV_FILE_NAME = "lastCsvExportFileName";
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        prefsEditor = sharedPreferences.edit();
 
         setupSdcardDir();
 
@@ -57,6 +69,7 @@ public class ExportActivity extends Activity
         filenameEditText = (EditText) findViewById(R.id.filenameEditTet);
         filenameHeader = (TextView) findViewById(R.id.filenameHeader);
         exportButton = (Button) findViewById(R.id.exportButton);
+        exportToLastFileBtn = (Button) findViewById(R.id.exportToLastFileButton);
         typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
         setupTypeSpinner();
 
@@ -101,6 +114,26 @@ public class ExportActivity extends Activity
                 }
             }
         });
+
+        exportToLastFileBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick (View view)
+            {
+                bundle.activity = ExportActivity.this;
+                bundle.exportType = exportType;
+                bundle.match = matchEditText.getText().toString();
+                bundle.team = teamEditText.getText().toString();
+                bundle.comment = commentEditText.getText().toString();
+                bundle.scores = scores;
+                bundle.fileForCsvAdd = new File(sharedPreferences.getString(KEY_LAST_CSV_FILE_PATH, ""));
+
+                handleExportAndErrors();
+            }
+        });
+
+        System.out.println("Last file: " + sharedPreferences.getString(KEY_LAST_CSV_FILE_PATH, ""));
+        System.out.println("Last filename: " + sharedPreferences.getString(KEY_LAST_CSV_FILE_NAME, ""));
     }
 
     /*
@@ -117,10 +150,17 @@ public class ExportActivity extends Activity
     {
         try
         {
-            String resultPath = Export.doExport(bundle);
+            File resultFile = Export.doExport(bundle);
+
+            if(bundle.exportType == ExportType.CSV_ADD || bundle.exportType == ExportType.CSV_NEW)
+            {
+                prefsEditor.putString(KEY_LAST_CSV_FILE_PATH, resultFile.getAbsolutePath()).apply();
+                prefsEditor.putString(KEY_LAST_CSV_FILE_NAME, resultFile.getName()).apply();
+            }
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this)
                     .setTitle("File exported!")
-                    .setMessage("The current Scores have been exported to:\n\n" + resultPath)
+                    .setMessage("The current Scores have been exported to:\n\n" + resultFile.getAbsolutePath())
                     .setNegativeButton("Ok", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -212,6 +252,15 @@ public class ExportActivity extends Activity
         // Apply the adapter to the spinner
         typeSpinner.setAdapter(typeAdapter);
 
+        /*
+         * If the last export file exists, automatically set the export type to
+         * CSV append
+         */
+        if (new File(sharedPreferences.getString(KEY_LAST_CSV_FILE_PATH, "")).exists())
+        {
+            typeSpinner.setSelection(2);
+        }
+
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -220,21 +269,25 @@ public class ExportActivity extends Activity
                 if (pos == 0) //Plaintext
                 {
                     handleFilenameVisibility(false);
+                    handleAppendToLastBtnVisibility(false);
                     exportType = ExportType.PLAINTEXT;
                 }
                 else if (pos == 1) //CSV_ADD
                 {
                     handleFilenameVisibility(false);
+                    handleAppendToLastBtnVisibility(false);
                     exportType = ExportType.CSV_NEW;
                 }
                 else if (pos == 2) //CSV_ADD add to existing
                 {
                     handleFilenameVisibility(true);
+                    handleAppendToLastBtnVisibility(true);
                     exportType = ExportType.CSV_ADD;
                 }
                 else if (pos == 3) //Google sheets
                 {
                     handleFilenameVisibility(false);
+                    handleAppendToLastBtnVisibility(false);
                     typeSpinner.setSelection(1);
                     exportType = ExportType.GOOGLE_SHEETS;
                 }
@@ -262,5 +315,30 @@ public class ExportActivity extends Activity
             filenameEditText.setVisibility(View.VISIBLE);
             exportButton.setText("Export");
         }
+    }
+
+    private void handleAppendToLastBtnVisibility(boolean b)
+    {
+        if(b)
+        {
+            /*
+             * Only show the button if the last file exists
+             */
+            if(new File(sharedPreferences.getString(KEY_LAST_CSV_FILE_PATH, "")).exists())
+            {
+                exportToLastFileBtn.setVisibility(View.VISIBLE);
+                exportToLastFileBtn.setText(getAppendToLastBtnText());
+            }
+        }
+        else
+        {
+            exportToLastFileBtn.setVisibility(View.GONE);
+        }
+    }
+
+    private String getAppendToLastBtnText()
+    {
+        String name = sharedPreferences.getString(KEY_LAST_CSV_FILE_NAME, "");
+        return "Append to last file [" + name + "]";
     }
 }
