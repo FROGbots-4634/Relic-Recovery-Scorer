@@ -3,18 +3,12 @@ package net.frogbots.relicrecoveryscorecalculator.ui;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +30,6 @@ import static net.frogbots.relicrecoveryscorecalculator.backend.export.Export.RE
 @SuppressLint("SetTextI18n")
 public class MainActivity extends Activity
 {
-    String currentVersion;
     Summary summary;
 
     Spinner[] spinners;
@@ -124,16 +117,6 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         showFirstIntroActivity();
         setContentView(R.layout.activity_main);
-
-        try
-        {
-            currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            new GetNewestVersionCode().execute();
-        }
-        catch (PackageManager.NameNotFoundException e)
-        {
-            e.printStackTrace();
-        }
 
         summary = new Summary((RelativeLayout) findViewById(R.id.summary_relative_layout));
         doInit();
@@ -688,81 +671,6 @@ public class MainActivity extends Activity
             startActivity(intent);
 
             editor.putBoolean("isFirstRun_b", false).apply();
-        }
-    }
-
-    private class GetNewestVersionCode extends AsyncTask<Void, String, String>
-    {
-        @Override
-        protected String doInBackground (Void... voids)
-        {
-
-            String newVersion = null;
-            try
-            {
-                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName() + "&hl=it")
-                        .timeout(30000)
-                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                        .referrer("http://www.google.com")
-                        .get()
-                        .select("div[itemprop=softwareVersion]")
-                        .first()
-                        .ownText();
-                return newVersion;
-            }
-            catch (Exception e)
-            {
-                return newVersion;
-            }
-        }
-
-        @Override
-        protected void onPostExecute (String onlineVersion)
-        {
-            super.onPostExecute(onlineVersion);
-            if (onlineVersion != null && !onlineVersion.isEmpty())
-            {
-                if (!currentVersion.equalsIgnoreCase(onlineVersion))
-                {
-                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Update available!")
-                            .setMessage("There is a newer version of this app available from Google Play. Would you like to update?")
-                            .setCancelable(false)
-                            .setNegativeButton(
-                                    "No thanks",
-                                    new DialogInterface.OnClickListener()
-                                    {
-                                        public void onClick(DialogInterface dialog, int id)
-                                        {
-
-                                        }
-                                    })
-                            .setPositiveButton(
-                                    "Update",
-                                    new DialogInterface.OnClickListener()
-                                    {
-                                        @Override
-                                        public void onClick (DialogInterface dialogInterface, int i)
-                                        {
-                                            /*
-                                             * Open the Google Play store
-                                             */
-                                            String appPackageName = getPackageName();
-                                            try {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                            } catch (android.content.ActivityNotFoundException anfe) {
-                                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                                            }
-                                        }
-                                    }
-                            )
-                            .create();
-
-                    dialog.show();
-                    ((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
-                }
-            }
-            Log.d("update", "Current version " + currentVersion + "\nplaystore version " + onlineVersion);
         }
     }
 }
