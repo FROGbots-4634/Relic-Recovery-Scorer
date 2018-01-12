@@ -118,6 +118,8 @@ public class MainActivity extends Activity
         showFirstIntroActivity();
         setContentView(R.layout.activity_main);
 
+        getActionBar().setTitle("RRS");
+
         summary = new Summary((RelativeLayout) findViewById(R.id.summary_relative_layout));
         doInit();
 

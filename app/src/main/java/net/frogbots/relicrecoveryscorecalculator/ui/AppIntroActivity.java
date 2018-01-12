@@ -53,7 +53,7 @@ public class AppIntroActivity extends IntroActivity
 
         addSlide(new SimpleSlide.Builder()
                          .title("Export Function")
-                         .description("Inside the overflow menu, there is an option to export the current scores. Scores can either be exported to a plaintext file, written to a new CSV file, or appended to an existing CSV file.")
+                         .description("The option to export scores can be very useful when scouting at competition or just keeping track of how your team gets better with practice. Scores can either be exported to a plaintext file, written to a new CSV file, or appended to an existing CSV file.")
                          .image(R.drawable.ic_import_export)
                          .background(R.color.teleop)
                          .backgroundDark(R.color.teleop_dark)
@@ -61,8 +61,8 @@ public class AppIntroActivity extends IntroActivity
                          .build());
 
         addSlide(new SimpleSlide.Builder()
-                         .title("Pro Tip")
-                         .description("Don't forget about the clear button in the overflow menu :)")
+                         .title("Protip")
+                         .description("Don't forget about the clear button :)")
                          .image(R.drawable.ic_clear_all)
                          .background(R.color.teleop)
                          .backgroundDark(R.color.teleop_dark)
