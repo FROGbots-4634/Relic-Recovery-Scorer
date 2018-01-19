@@ -49,8 +49,15 @@ public class ExportActivity extends Activity
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor prefsEditor;
 
+    /*
+     * Shared prefs keys
+     */
     private static final String KEY_LAST_CSV_FILE_PATH = "lastCsvExportFilePath";
     private static final String KEY_LAST_CSV_FILE_NAME = "lastCsvExportFileName";
+    private static final String KEY_COMMENT_EDIT_TEXT = "commentEditText";
+    private static final String KEY_MATCH_EDIT_TEXT = "matchEditText";
+    private static final String KEY_FILENAME_EDIT_TEXT = "filenameEditText";
+    private static final String KEY_TEAM_EDIT_TEXT = "teamEditText";
 
     @Override
     protected void onCreate (Bundle savedInstanceState)
@@ -72,6 +79,8 @@ public class ExportActivity extends Activity
         exportToLastFileBtn = (Button) findViewById(R.id.exportToLastFileButton);
         typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
         setupTypeSpinner();
+
+        loadLastEditTxtValuesFromSharedPrefs();
 
         /*
          * Make the action bar a button to navigate back
@@ -146,6 +155,13 @@ public class ExportActivity extends Activity
         return true;
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        writeLastEditTxtValuesToSharedPrefs();
+        super.onDestroy();
+    }
+
     private void handleExportAndErrors()
     {
         try
@@ -166,6 +182,7 @@ public class ExportActivity extends Activity
                         @Override
                         public void onClick (DialogInterface dialogInterface, int i)
                         {
+                            clearEditTxtValues();
                             finish();
                         }
                     })
@@ -340,5 +357,30 @@ public class ExportActivity extends Activity
     {
         String name = sharedPreferences.getString(KEY_LAST_CSV_FILE_NAME, "");
         return "Append to last file [" + name + "]";
+    }
+
+    private void writeLastEditTxtValuesToSharedPrefs()
+    {
+        prefsEditor.putString(KEY_COMMENT_EDIT_TEXT, commentEditText.getText().toString());
+        prefsEditor.putString(KEY_MATCH_EDIT_TEXT, matchEditText.getText().toString());
+        prefsEditor.putString(KEY_FILENAME_EDIT_TEXT, filenameEditText.getText().toString());
+        prefsEditor.putString(KEY_TEAM_EDIT_TEXT, teamEditText.getText().toString());
+        prefsEditor.commit();
+    }
+
+    private void loadLastEditTxtValuesFromSharedPrefs()
+    {
+        commentEditText.setText(sharedPreferences.getString(KEY_COMMENT_EDIT_TEXT, ""));
+        matchEditText.setText(sharedPreferences.getString(KEY_MATCH_EDIT_TEXT, ""));
+        filenameEditText.setText(sharedPreferences.getString(KEY_FILENAME_EDIT_TEXT, ""));
+        teamEditText.setText(sharedPreferences.getString(KEY_TEAM_EDIT_TEXT, ""));
+    }
+
+    private void clearEditTxtValues()
+    {
+        commentEditText.setText("");
+        matchEditText.setText("");
+        filenameEditText.setText("");
+        teamEditText.setText("");
     }
 }
