@@ -11,6 +11,7 @@ import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -58,7 +59,7 @@ class CsvCommon
             COLUMN_TOTAL_SCORE
     };
 
-    static int findIndexInColumnArray(String item)
+    private static int findIndexInColumnArray (String item)
     {
         for(int i = 0; i < columns.length; i ++)
         {
@@ -67,7 +68,7 @@ class CsvCommon
                 return i;
             }
         }
-        return -1;
+        throw new InvalidParameterException();
     }
 
     static void saveToCSV (Context context, File file, String[][] array) throws IOException
