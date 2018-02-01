@@ -22,9 +22,6 @@ import android.widget.TextView;
 import net.frogbots.relicrecoveryscorecalculator.R;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.TOA_queryHighscore;
-
-import org.jsoup.Jsoup;
-
 import static net.frogbots.relicrecoveryscorecalculator.backend.export.Export.REQUEST_EXTERNAL_STORAGE_PERMISSIONS;
 
 @SuppressLint("SetTextI18n")

@@ -100,7 +100,7 @@ class Summary
 
     void updateSummary ()
     {
-        setVisibilityAndText(summaryJewelScore, summaryJewelScoreValue, CalculateScores.calculateAutonomousJewelScore(Scores.getAutonomousJewelLevel()            ));
+        setVisibilityAndText(summaryJewelScore,                         summaryJewelScoreValue,                         CalculateScores.calculateAutonomousJewelScore(                Scores.getAutonomousJewelLevel()            ));
         setVisibilityAndText(summaryPreloadedGlyphScore,                summaryPreloadedGlyphScoreValue,                CalculateScores.calculateAutonomousPreLoadedGlyphScore(       Scores.getAutonomousPreloadedGlyphLevel()   ));
         setVisibilityAndText(summaryAutoGlyphsScore,                    summaryAutoGlyphsScoreValue,                    CalculateScores.calculateAutonomousGlyphsScore(               Scores.getAutonomousGlyphsScored()          ));
         setVisibilityAndText(summaryAutoRobotParkedScore,               summaryAutoRobotParkedScoreValue,               CalculateScores.calculateAutonomousParkingScore(              Scores.getParkingLevel()                    ));

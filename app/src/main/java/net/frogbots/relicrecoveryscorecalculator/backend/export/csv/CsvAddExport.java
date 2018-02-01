@@ -2,7 +2,6 @@ package net.frogbots.relicrecoveryscorecalculator.backend.export.csv;
 
 import com.opencsv.CSVReader;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
-import net.frogbots.relicrecoveryscorecalculator.ui.UiUtils;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
