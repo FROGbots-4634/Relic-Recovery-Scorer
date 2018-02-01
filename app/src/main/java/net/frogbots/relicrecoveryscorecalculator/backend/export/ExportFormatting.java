@@ -26,26 +26,14 @@ public class ExportFormatting
         return result;
     }
 
-    public static String glyphForExport(int i)
+    public static String preloadGlyphVuMarkForExport ()
     {
-        String result = null;
+        return yN(Scores.getAutonomousPreloadedGlyphLevel() == 2);
+    }
 
-        switch (i)
-        {
-            case 0:
-                result = "Null";
-                break;
-
-            case 1:
-                result = "Glyph scored";
-                break;
-
-            case 2:
-                result = "Glyph scored in column indicated by key";
-                break;
-        }
-
-        return result;
+    public static String preloadGlyphForExport ()
+    {
+         return yN(Scores.getAutonomousPreloadedGlyphLevel() > 0);
     }
 
     public static String robotBalancedForExport()

@@ -23,16 +23,17 @@ class CsvCommon
     private static final String COLUMN_TEAM                   = "Team";
     private static final String COLUMN_COMMENT                = "Comment";
     private static final String COLUMN_JEWEL                  = "Jewel";
-    private static final String COLUMN_PRELOADED_GLPYH        = "Pre-loaded glyph";
-    private static final String COLUMN_AUTO_GLPYHS_SCORED     = "[Auto] glyphs scored";
-    private static final String COLUMN_AUTO_PARKING           = "Autonomous parking";
-    private static final String COLUMN_TELE_GLYPHS_SCORED     = "[Tele-Op] glyphs scored";
-    private static final String COLUMN_CRYPT_ROWS_COMPLETE    = "Cryptobox rows complete";
-    private static final String COLUMN_CRYPT_COLUMNS_COMPLETE = "Cryptobox columns complete";
-    private static final String COLUMN_CIPHER_COMPLETE        = "Cipher completed";
-    private static final String COLUMN_RELIC_POSITION         = "Relic position";
+    private static final String COLUMN_PRELOADED_GLPYH_SCORED = "Preload glyph";
+    private static final String COLUMN_PRELOADED_GLPYH_VUMARK = "VuMark";
+    private static final String COLUMN_AUTO_GLPYHS_SCORED     = "Extra auto glyphs";
+    private static final String COLUMN_AUTO_PARKING           = "Auto parked";
+    private static final String COLUMN_TELE_GLYPHS_SCORED     = "Tele-Op glyphs";
+    private static final String COLUMN_CRYPT_ROWS_COMPLETE    = "Crypt. rows";
+    private static final String COLUMN_CRYPT_COLUMNS_COMPLETE = "Crypt. cols";
+    private static final String COLUMN_CIPHER_COMPLETE        = "Cipher";
+    private static final String COLUMN_RELIC_POSITION         = "Relic zone";
     private static final String COLUMN_RELIC_UPRIGHT          = "Relic upright";
-    private static final String COLUMN_ROBOT_BALANCED         = "Robot balanced";
+    private static final String COLUMN_ROBOT_BALANCED         = "Balanced";
     private static final String COLUMN_MINOR_PENALTIES        = "Minor penalties";
     private static final String COLUMN_MAJOR_PENALTIES        = "Major penalties";
     private static final String COLUMN_TOTAL_SCORE            = "TOTAL SCORE";
@@ -41,7 +42,8 @@ class CsvCommon
             COLUMN_TEAM,
             COLUMN_MATCH,
             COLUMN_JEWEL,
-            COLUMN_PRELOADED_GLPYH,
+            COLUMN_PRELOADED_GLPYH_SCORED,
+            COLUMN_PRELOADED_GLPYH_VUMARK,
             COLUMN_AUTO_GLPYHS_SCORED,
             COLUMN_AUTO_PARKING,
             COLUMN_TELE_GLYPHS_SCORED,
@@ -87,7 +89,8 @@ class CsvCommon
         array[rowNumber][findIndexInColumnArray(COLUMN_TEAM)]                    = bundle.team;
         array[rowNumber][findIndexInColumnArray(COLUMN_COMMENT)]                 = bundle.comment;
         array[rowNumber][findIndexInColumnArray(COLUMN_JEWEL)]                   = ExportFormatting.jewelForExport(Scores.getAutonomousJewelLevel());
-        array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH)]         = (ExportFormatting.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
+        array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH_SCORED)]  = ExportFormatting.preloadGlyphForExport();
+        array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH_VUMARK)]  = ExportFormatting.preloadGlyphVuMarkForExport();
         array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_GLPYHS_SCORED)]      = Integer.toString(Scores.getAutonomousGlyphsScored());
         array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_PARKING)]            = ExportFormatting.autoParkingForExport();
         array[rowNumber][findIndexInColumnArray(COLUMN_TELE_GLYPHS_SCORED)]      = Integer.toString(Scores.getTeleOpGlyphsScored());

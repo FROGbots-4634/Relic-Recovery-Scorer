@@ -1,9 +1,7 @@
 package net.frogbots.relicrecoveryscorecalculator.backend.export;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.widget.Toast;
+
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
 import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.csv.FileAlreadyExistsException;
@@ -43,7 +41,8 @@ class PlaintextExport
         outputWriter.write("\r\nTeam: "                       + exportBundle.team);
         outputWriter.write("\r\nComment: "                    + exportBundle.comment);
         outputWriter.write("\r\nJewel: "                      + ExportFormatting.jewelForExport(Scores.getAutonomousJewelLevel()));
-        outputWriter.write("\r\nPre-loaded glyph: "           + ExportFormatting.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
+        outputWriter.write("\r\nPre-loaded glyph scored: "    + ExportFormatting.preloadGlyphForExport());
+        outputWriter.write("\r\nPreloaded in VuMark col: "    + ExportFormatting.preloadGlyphVuMarkForExport());
         outputWriter.write("\r\n[Auto] glyphs scored: "       + Scores.getAutonomousGlyphsScored());
         outputWriter.write("\r\nAutonomous parking: "         + (Scores.getParkingLevel() > 0));
         outputWriter.write("\r\n[Tele-Op] glyphs scored: "    + Scores.getTeleOpGlyphsScored());
