@@ -42,8 +42,8 @@ class PlaintextExport
         outputWriter.write("\r\n\r\nMatch: "                  + exportBundle.match);
         outputWriter.write("\r\nTeam: "                       + exportBundle.team);
         outputWriter.write("\r\nComment: "                    + exportBundle.comment);
-        outputWriter.write("\r\nJewel: "                      + Utils.jewelForExport(Scores.getAutonomousJewelLevel()));
-        outputWriter.write("\r\nPre-loaded glyph: "           + Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
+        outputWriter.write("\r\nJewel: "                      + ExportFormatting.jewelForExport(Scores.getAutonomousJewelLevel()));
+        outputWriter.write("\r\nPre-loaded glyph: "           + ExportFormatting.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
         outputWriter.write("\r\n[Auto] glyphs scored: "       + Scores.getAutonomousGlyphsScored());
         outputWriter.write("\r\nAutonomous parking: "         + (Scores.getParkingLevel() > 0));
         outputWriter.write("\r\n[Tele-Op] glyphs scored: "    + Scores.getTeleOpGlyphsScored());

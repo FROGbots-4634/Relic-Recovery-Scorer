@@ -98,7 +98,6 @@ public class ExportActivity extends Activity
             @Override
             public void onClick (View view)
             {
-                bundle.activity = ExportActivity.this;
                 bundle.exportType = exportType;
                 bundle.match = matchEditText.getText().toString();
                 bundle.team = teamEditText.getText().toString();
@@ -129,7 +128,6 @@ public class ExportActivity extends Activity
             @Override
             public void onClick (View view)
             {
-                bundle.activity = ExportActivity.this;
                 bundle.exportType = exportType;
                 bundle.match = matchEditText.getText().toString();
                 bundle.team = teamEditText.getText().toString();

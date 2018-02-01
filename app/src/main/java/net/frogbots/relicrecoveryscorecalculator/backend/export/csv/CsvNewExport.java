@@ -21,7 +21,7 @@ public class CsvNewExport
         System.arraycopy(CsvCommon.columns, 0, array[0], 0, CsvCommon.columns.length);
 
         CsvCommon.writeScoresToRow(array, exportBundle, 1);
-        CsvCommon.saveToCSV(exportBundle.activity, file, array);
+        CsvCommon.saveToCSV(file, array);
 
         return file;
     }

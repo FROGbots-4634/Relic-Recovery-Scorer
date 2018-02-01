@@ -48,7 +48,7 @@ public class CsvAddExport
             String[][] out = new String[count+1][CsvCommon.columns.length];
             arrayCopy(readArray, out);
             CsvCommon.writeScoresToRow(out, exportBundle, count);
-            CsvCommon.saveToCSV(exportBundle.activity, exportBundle.fileForCsvAdd, out);
+            CsvCommon.saveToCSV(exportBundle.fileForCsvAdd, out);
         }
         return exportBundle.fileForCsvAdd;
     }

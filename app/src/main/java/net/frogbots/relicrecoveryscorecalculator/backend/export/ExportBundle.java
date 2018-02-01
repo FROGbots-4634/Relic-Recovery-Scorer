@@ -7,7 +7,6 @@ import java.io.File;
 public class ExportBundle
 {
     public ExportType exportType;
-    public Activity activity;
     public String match;
     public String comment;
     public String team;

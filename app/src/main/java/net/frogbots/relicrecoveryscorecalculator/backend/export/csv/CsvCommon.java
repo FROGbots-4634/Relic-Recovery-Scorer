@@ -1,12 +1,11 @@
 package net.frogbots.relicrecoveryscorecalculator.backend.export.csv;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 
 import com.opencsv.CSVWriter;
 import net.frogbots.relicrecoveryscorecalculator.backend.Scores;
-import net.frogbots.relicrecoveryscorecalculator.backend.Utils;
 import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportBundle;
+import net.frogbots.relicrecoveryscorecalculator.backend.export.ExportFormatting;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -39,10 +38,8 @@ class CsvCommon
     private static final String COLUMN_TOTAL_SCORE            = "TOTAL SCORE";
 
     static final String[] columns = {
-            COLUMN_TIME,
-            COLUMN_MATCH,
             COLUMN_TEAM,
-            COLUMN_COMMENT,
+            COLUMN_MATCH,
             COLUMN_JEWEL,
             COLUMN_PRELOADED_GLPYH,
             COLUMN_AUTO_GLPYHS_SCORED,
@@ -56,7 +53,9 @@ class CsvCommon
             COLUMN_ROBOT_BALANCED,
             COLUMN_MINOR_PENALTIES,
             COLUMN_MAJOR_PENALTIES,
-            COLUMN_TOTAL_SCORE
+            COLUMN_TOTAL_SCORE,
+            COLUMN_TIME,
+            COLUMN_COMMENT
     };
 
     private static int findIndexInColumnArray (String item)
@@ -71,7 +70,7 @@ class CsvCommon
         throw new InvalidParameterException();
     }
 
-    static void saveToCSV (Context context, File file, String[][] array) throws IOException
+    static void saveToCSV (File file, String[][] array) throws IOException
     {
         CSVWriter writer = new CSVWriter(new FileWriter(file));
         writer.writeAll(Arrays.asList(array));
@@ -87,17 +86,17 @@ class CsvCommon
         array[rowNumber][findIndexInColumnArray(COLUMN_MATCH)]                   = bundle.match;
         array[rowNumber][findIndexInColumnArray(COLUMN_TEAM)]                    = bundle.team;
         array[rowNumber][findIndexInColumnArray(COLUMN_COMMENT)]                 = bundle.comment;
-        array[rowNumber][findIndexInColumnArray(COLUMN_JEWEL)]                   = Utils.jewelForExport(Scores.getAutonomousJewelLevel());
-        array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH)]         = (Utils.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
+        array[rowNumber][findIndexInColumnArray(COLUMN_JEWEL)]                   = ExportFormatting.jewelForExport(Scores.getAutonomousJewelLevel());
+        array[rowNumber][findIndexInColumnArray(COLUMN_PRELOADED_GLPYH)]         = (ExportFormatting.glyphForExport(Scores.getAutonomousPreloadedGlyphLevel()));
         array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_GLPYHS_SCORED)]      = Integer.toString(Scores.getAutonomousGlyphsScored());
-        array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_PARKING)]            = Boolean.toString(Scores.getParkingLevel() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_AUTO_PARKING)]            = ExportFormatting.autoParkingForExport();
         array[rowNumber][findIndexInColumnArray(COLUMN_TELE_GLYPHS_SCORED)]      = Integer.toString(Scores.getTeleOpGlyphsScored());
         array[rowNumber][findIndexInColumnArray(COLUMN_CRYPT_ROWS_COMPLETE)]     = Integer.toString(Scores.getTeleopCryptoboxRowsComplete());
         array[rowNumber][findIndexInColumnArray(COLUMN_CRYPT_COLUMNS_COMPLETE)]  = Integer.toString(Scores.getTeleopCryptoboxColumnsComplete());
-        array[rowNumber][findIndexInColumnArray(COLUMN_CIPHER_COMPLETE)]         = Boolean.toString(Scores.getTeleopCipherLevel() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_CIPHER_COMPLETE)]         = ExportFormatting.cipherForExport();
         array[rowNumber][findIndexInColumnArray(COLUMN_RELIC_POSITION)]          = Integer.toString(Scores.getEndgameRelicPosition());
-        array[rowNumber][findIndexInColumnArray(COLUMN_RELIC_UPRIGHT)]           = Boolean.toString(Scores.getEndgameRelicOrientation() > 0);
-        array[rowNumber][findIndexInColumnArray(COLUMN_ROBOT_BALANCED)]          = Boolean.toString(Scores.getEndgameRobotBalanced() > 0);
+        array[rowNumber][findIndexInColumnArray(COLUMN_RELIC_UPRIGHT)]           = ExportFormatting.relicStandingForExport();
+        array[rowNumber][findIndexInColumnArray(COLUMN_ROBOT_BALANCED)]          = ExportFormatting.robotBalancedForExport();
         array[rowNumber][findIndexInColumnArray(COLUMN_MINOR_PENALTIES)]         = Integer.toString(Scores.getNumMinorPenalties());
         array[rowNumber][findIndexInColumnArray(COLUMN_MAJOR_PENALTIES)]         = Integer.toString(Scores.getNumMajorPenalties());
         array[rowNumber][findIndexInColumnArray(COLUMN_TOTAL_SCORE)]             = Integer.toString(Scores.getTotalScore());
