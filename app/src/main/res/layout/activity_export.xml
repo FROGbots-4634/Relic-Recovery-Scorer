@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
-            android:hint="scored relic in 2nd zone, autonomous failed"/>
+            android:hint="relic fell out of claw"/>
 
         <Button
             android:id="@+id/exportButton"
