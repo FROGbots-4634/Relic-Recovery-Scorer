@@ -11,15 +11,15 @@ public class ExportFormatting
         switch (i)
         {
             case 0:
-                result =  "Null";
+                result =  "";
                 break;
 
             case 1:
-                result = "Opponent's jewel removed";
+                result = "C";
                 break;
 
             case 2:
-                result = "Your jewel removed";
+                result = "W";
                 break;
         }
 

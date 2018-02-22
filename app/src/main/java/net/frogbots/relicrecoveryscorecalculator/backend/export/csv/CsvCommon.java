@@ -25,7 +25,7 @@ class CsvCommon
     private static final String COLUMN_JEWEL                  = "Jewel";
     private static final String COLUMN_PRELOADED_GLPYH_SCORED = "Preload glyph";
     private static final String COLUMN_PRELOADED_GLPYH_VUMARK = "VuMark";
-    private static final String COLUMN_AUTO_GLPYHS_SCORED     = "Extra auto glyphs";
+    private static final String COLUMN_AUTO_GLPYHS_SCORED     = "Ex. auto glyphs";
     private static final String COLUMN_AUTO_PARKING           = "Auto parked";
     private static final String COLUMN_TELE_GLYPHS_SCORED     = "Tele-Op glyphs";
     private static final String COLUMN_CRYPT_ROWS_COMPLETE    = "Crypt. rows";
@@ -34,8 +34,8 @@ class CsvCommon
     private static final String COLUMN_RELIC_POSITION         = "Relic zone";
     private static final String COLUMN_RELIC_UPRIGHT          = "Relic upright";
     private static final String COLUMN_ROBOT_BALANCED         = "Balanced";
-    private static final String COLUMN_MINOR_PENALTIES        = "Minor penalties";
-    private static final String COLUMN_MAJOR_PENALTIES        = "Major penalties";
+    private static final String COLUMN_MINOR_PENALTIES        = "Minor pen.";
+    private static final String COLUMN_MAJOR_PENALTIES        = "Major pen.";
     private static final String COLUMN_TOTAL_SCORE            = "TOTAL SCORE";
 
     static final String[] columns = {
